@@ -1,0 +1,60 @@
+- /api/v1/men/{manId}:
+    get:
+      tags:
+        - "Человек"
+      summary: "Получить информацию о человеке"
+      description: "Получить информацию о человеке"
+      operationId: "getMan"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "manId"
+          required: true
+          description: "Идентификатор человека"
+      responses:
+        "200":
+          description: "Человек получен"
+          schema:
+            $ref: "#/definitions/GetManResponse"
+
+- /api/v1/men:
+    get:
+      tags:
+        - "Человек"
+      summary: "Получить информацию о всех людях"
+      description: "Получить информацию о всех людях"
+      operationId: "getMen"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Люди получены"
+          schema:
+            $ref: "#/definitions/GetAllMenResponse"
+    post:
+      tags:
+        - "Человек"
+      summary: "Создать человека"
+      description: "Создать человека"
+      operationId: "createMan"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "manDto"
+          required: true
+          description: "Объект нового человека"
+          schema:
+            $ref: "#/definitions/CreateManDto"
+      responses:
+        "200":
+          description: "Человек создан"
+          schema:
+            $ref: "#/definitions/CreateManResponse"

@@ -1,0 +1,26 @@
+- CreateManResponse:
+    properties:
+      id:
+        type: "string"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+      deletedAt:
+        type: "string"
+        format: "date-time"
+      name:
+        type: "string"
+      age:
+        type: "integer"
+      cats:
+        type: "array"
+        items:
+          properties:
+            name:
+              type: "string"
+            age:
+              type: "integer"
+

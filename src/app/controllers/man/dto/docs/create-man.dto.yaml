@@ -1,0 +1,12 @@
+- CreateManDto:
+    properties:
+      name:
+        type: "string"
+      age:
+        type: "integer"
+      cats:
+        type: "array"
+        items:
+          properties:
+            name:
+              type: "string"

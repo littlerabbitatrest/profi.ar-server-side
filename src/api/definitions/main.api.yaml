@@ -1,0 +1,12 @@
+swagger: "2.0"
+info:
+  description: "Шаблон серверного приложения noname.team"
+  version: "0.0.1"
+  title: "backend-starter-kit"
+  contact:
+    email: "causelove@noname.team"
+host: "localhost:3000"
+basePath: "/"
+schemes:
+  - "http"
+  - "https"
