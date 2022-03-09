@@ -1,12 +1,13 @@
 import { BaseEntity } from '@nonameteam/core';
 
-import { IOrder, IReview, ISkill, ISpecialist } from '@app/interfaces';
+import { ICategory, IOrder, IReview, IScope, ISpecialist } from '@app/interfaces';
 
 export interface IVacancy extends BaseEntity {
   education: string;
   experience: string;
   specialist: ISpecialist;
-  skills: ISkill[];
-  review: IReview[];
+  scope: IScope;
+  categories: ICategory[];
+  reviews: IReview[];
   orders: IOrder[];
 }
