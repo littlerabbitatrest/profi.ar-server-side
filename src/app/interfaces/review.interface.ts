@@ -1,9 +1,10 @@
-import { ICustomer } from '@app/interfaces/customer.interface';
+import { BaseEntity } from '@nonameteam/core';
 
-export interface IReview {
-  orderId: string;
+import { ICustomer, IVacancy } from '@app/interfaces';
+
+export interface IReview extends BaseEntity {
   description: string;
-  customer: ICustomer,
-  rate: number,
-  dateOfCreate: Date,
+  rate: number;
+  vacancy: IVacancy;
+  customer: ICustomer;
 }

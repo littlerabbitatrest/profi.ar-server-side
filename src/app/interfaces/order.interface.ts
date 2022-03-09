@@ -1,16 +1,19 @@
+import { BaseEntity } from '@nonameteam/core';
+
+import { ICustomer, ISpecialist, IScope } from '@app/interfaces';
+
 export enum Statuses {
-  complete,
-  new,
-  accepted,
+  newOrder,
+  acceptedOrder,
+  completedOrder,
 }
 
-export interface IOrder {
-  description: string;
+export interface IOrder extends BaseEntity {
   title: string;
+  description: string;
+  price: number;
   customer: ICustomer;
   specialist: ISpecialist;
-  dateOfCreate: Date;
-  category: ISkill;
-  status: Statuses,
-  price: number,
+  scope: IScope;
+  status: Statuses;
 }
