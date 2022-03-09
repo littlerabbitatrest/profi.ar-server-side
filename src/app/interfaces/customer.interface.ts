@@ -9,6 +9,7 @@ export interface ICustomer extends BaseEntity {
   email: string;
   phone: string;
   password: string;
+  commonRate: number;
   location: ILocation;
   orders: IOrder[];
   reviews: IReview[];
