@@ -6,15 +6,15 @@ import { Customer, Specialist } from '@app/entities';
 
 @Entity({ name: 'Locations' })
 export class Location extends BaseEntity implements ILocation {
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 100 })
     state: string;
 
   @Column({ type: 'varchar', length: 100 })
     city: string;
 
-  @OneToMany(() => Customer, customer => customer.location, { cascade: true })
+  @OneToMany(() => Customer, customer => customer.location)
     customers: Customer[];
 
-  @OneToMany(() => Specialist, specialist => specialist.location, { cascade: true })
+  @OneToMany(() => Specialist, specialist => specialist.location)
     specialists: Specialist[];
 }

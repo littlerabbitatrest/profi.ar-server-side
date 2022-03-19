@@ -1,6 +1,6 @@
 export * from './customer.entity';
 export * from './order.entity';
-export * from './review.entity';
+export * from './vacancy-review.entity';
 export * from './category.entity';
 export * from './specialist.entity';
 export * from './scope.entity';

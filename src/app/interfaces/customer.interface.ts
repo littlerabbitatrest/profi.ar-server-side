@@ -1,6 +1,6 @@
 import { BaseEntity } from '@nonameteam/core';
 
-import { ILocation, IOrder, IReview } from '@app/interfaces';
+import { ICustomerReview, ILocation, IOrder, IVacancyReview } from '@app/interfaces';
 
 export interface ICustomer extends BaseEntity {
   firstName: string;
@@ -12,5 +12,6 @@ export interface ICustomer extends BaseEntity {
   commonRate: number;
   location: ILocation;
   orders: IOrder[];
-  reviews: IReview[];
+  vacancyReviews: IVacancyReview[];
+  customerReviews: ICustomerReview[];
 }
