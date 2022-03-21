@@ -2,8 +2,7 @@ import { BaseEntity } from '@nonameteam/core';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
 import { ISpecialist } from '@app/interfaces';
-import { Vacancy, Location } from '@app/entities';
-import { CustomerReview } from '@app/entities/customer-review.entity';
+import { Vacancy, Location, CustomerReview } from '@app/entities';
 
 @Entity({ name: 'Specialists' })
 export class Specialist extends BaseEntity implements ISpecialist {

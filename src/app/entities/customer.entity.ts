@@ -1,9 +1,8 @@
 import { BaseEntity } from '@nonameteam/core';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
-import { ICustomer } from '@app/interfaces';
-import { Order, Location, VacancyReview } from '@app/entities';
-import { CustomerReview } from '@app/entities/customer-review.entity';
+import { ICustomer, Roles } from '@app/interfaces';
+import { Order, Location, VacancyReview, CustomerReview } from '@app/entities';
 
 @Entity({ name: 'Customers' })
 export class Customer extends BaseEntity implements ICustomer {
@@ -27,6 +26,9 @@ export class Customer extends BaseEntity implements ICustomer {
 
   @Column({ type: 'integer', default: 0 })
     commonRate: number;
+
+  @Column({ type: 'enum', enum: Roles, default: Roles.common })
+    role: Roles;
 
   @ManyToOne(() => Location, location => location.customers)
     location: Location;

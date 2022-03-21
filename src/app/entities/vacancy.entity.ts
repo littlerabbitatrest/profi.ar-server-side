@@ -2,8 +2,7 @@ import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '@nonameteam/core';
 
 import { IVacancy } from '@app/interfaces';
-import { Order, Category, Specialist, Scope, VacancyReview } from '@app/entities';
-import { CustomerReview } from '@app/entities/customer-review.entity';
+import { Order, Category, Specialist, Scope, VacancyReview, CustomerReview } from '@app/entities';
 
 @Entity({ name: 'Vacancies' })
 export class Vacancy extends BaseEntity implements IVacancy {
@@ -19,10 +18,10 @@ export class Vacancy extends BaseEntity implements IVacancy {
   @ManyToOne(() => Specialist, specialist => specialist.vacancies, { onDelete: 'CASCADE' })
     specialist: Specialist;
 
-  @ManyToOne(() => Scope, scope => scope.vacancies)
+  @ManyToOne(() => Scope, scope => scope.vacancies, { onDelete: 'CASCADE' })
     scope: Scope;
 
-  @ManyToMany(() => Category, category => category.vacancies)
+  @ManyToMany(() => Category, category => category.vacancies, { onDelete: 'CASCADE' })
     categories: Category[];
 
   @OneToMany(() => VacancyReview, vacancyReview => vacancyReview.vacancy)

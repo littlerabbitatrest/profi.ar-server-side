@@ -6,3 +6,4 @@ export * from './specialist.entity';
 export * from './scope.entity';
 export * from './location.entity';
 export * from './vacancy.entity';
+export * from './customer-review.entity';

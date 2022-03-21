@@ -1,5 +1,5 @@
 import { BaseEntity } from '@nonameteam/core';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
 
 import { ICategory } from '@app/interfaces';
 import { Scope, Vacancy } from '@app/entities';
@@ -12,6 +12,6 @@ export class Category extends BaseEntity implements ICategory {
   @ManyToOne(() => Scope, scope => scope.categories, { onDelete: 'CASCADE' })
     scope: Scope;
 
-  @OneToMany(() => Vacancy, vacancy => vacancy.categories)
+  @ManyToMany(() => Vacancy, vacancy => vacancy.categories)
     vacancies: Vacancy[];
 }
