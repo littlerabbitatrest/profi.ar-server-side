@@ -1,6 +1,11 @@
 import { BaseEntity } from '@nonameteam/core';
 
-import { ILocation, IOrder, IReview } from '@app/interfaces';
+import { ICustomerReview, ILocation, IOrder, IVacancyReview } from '@app/interfaces';
+
+export enum Roles {
+  common,
+  admin
+}
 
 export interface ICustomer extends BaseEntity {
   firstName: string;
@@ -10,7 +15,9 @@ export interface ICustomer extends BaseEntity {
   phone: string;
   password: string;
   commonRate: number;
+  role: Roles;
   location: ILocation;
   orders: IOrder[];
-  reviews: IReview[];
+  vacancyReviews: IVacancyReview[];
+  customerReviews: ICustomerReview[];
 }

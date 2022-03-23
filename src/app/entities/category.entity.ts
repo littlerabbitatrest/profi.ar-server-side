@@ -9,9 +9,9 @@ export class Category extends BaseEntity implements ICategory {
   @Column({ type: 'varchar', length: 100 })
     title: string;
 
-  @ManyToOne(() => Scope, scope => scope.categories, { cascade: true })
+  @ManyToOne(() => Scope, scope => scope.categories, { onDelete: 'CASCADE' })
     scope: Scope;
 
-  @ManyToMany(() => Vacancy, vacancy => vacancy.categories, { cascade: true })
+  @ManyToMany(() => Vacancy, vacancy => vacancy.categories)
     vacancies: Vacancy[];
 }

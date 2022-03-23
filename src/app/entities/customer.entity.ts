@@ -1,8 +1,8 @@
 import { BaseEntity } from '@nonameteam/core';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
-import { ICustomer } from '@app/interfaces';
-import { Order, Review, Location } from '@app/entities';
+import { ICustomer, Roles } from '@app/interfaces';
+import { Order, Location, VacancyReview, CustomerReview } from '@app/entities';
 
 @Entity({ name: 'Customers' })
 export class Customer extends BaseEntity implements ICustomer {
@@ -18,21 +18,27 @@ export class Customer extends BaseEntity implements ICustomer {
   @Column({ type: 'varchar', length: 50 })
     email: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 13 })
     phone: string;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 20 })
     password: string;
 
-  @Column({ type: 'number' })
+  @Column({ type: 'integer', default: 0 })
     commonRate: number;
 
-  @ManyToOne(() => Location, location => location.customers, { cascade: true })
+  @Column({ type: 'enum', enum: Roles, default: Roles.common })
+    role: Roles;
+
+  @ManyToOne(() => Location, location => location.customers)
     location: Location;
 
   @OneToMany(() => Order, order => order.customer, { cascade: true })
     orders: Order[];
 
-  @OneToMany(() => Review, review => review.customer, { cascade: true })
-    reviews: Review[];
+  @OneToMany(() => VacancyReview, vacancyReview => vacancyReview.customer, { cascade: true })
+    vacancyReviews: VacancyReview[];
+
+  @OneToMany(() => CustomerReview, customerReview => customerReview.customer, { cascade: true })
+    customerReviews: CustomerReview[];
 }

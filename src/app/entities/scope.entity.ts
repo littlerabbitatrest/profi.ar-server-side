@@ -6,15 +6,15 @@ import { Category, Order, Vacancy } from '@app/entities';
 
 @Entity({ name: 'Scopes' })
 export class Scope extends BaseEntity implements IScope {
-  @Column()
+  @Column({ type: 'varchar', length: 70 })
     name: string;
 
   @OneToMany(() => Category, category => category.scope, { cascade: true })
     categories: Category[];
 
-  @OneToMany(() => Order, order => order.scope, { cascade: true })
+  @OneToMany(() => Order, order => order.scope)
     orders: Order[];
 
-  @OneToMany(() => Vacancy, vacancy => vacancy.scope, { cascade: true })
+  @OneToMany(() => Vacancy, vacancy => vacancy.scope)
     vacancies: Vacancy[];
 }
