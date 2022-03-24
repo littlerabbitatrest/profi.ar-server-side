@@ -1,6 +1,6 @@
 import { BaseEntity } from '@nonameteam/core';
 
-import { ICategory, IOrder, IReview, IScope, ISpecialist } from '@app/interfaces';
+import { ICategory, IOrder, IVacancyReview, IScope, ISpecialist } from '@app/interfaces';
 
 export interface IVacancy extends BaseEntity {
   education: string;
@@ -9,6 +9,6 @@ export interface IVacancy extends BaseEntity {
   specialist: ISpecialist;
   scope: IScope;
   categories: ICategory[];
-  reviews: IReview[];
   orders: IOrder[];
+  vacancyReviews: IVacancyReview[];
 }
