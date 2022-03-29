@@ -7,3 +7,5 @@ export * from './scope.interface';
 export * from './location.interface';
 export * from './vacancy.interface';
 export * from './customer-review.interface';
+export * from './state.interface';
+

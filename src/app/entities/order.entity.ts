@@ -21,7 +21,7 @@ export class Order extends BaseEntity implements IOrder {
   @ManyToOne(() => Customer, customer => customer.orders, { onDelete: 'CASCADE' })
     customer: Customer;
 
-  @ManyToOne(() => Vacancy, vacancy => vacancy.orders, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Vacancy, vacancy => vacancy.orders, { onDelete: 'CASCADE', nullable: true })
     vacancy: Vacancy;
 
   @ManyToOne(() => Scope, scope => scope.orders, { onDelete: 'CASCADE' })

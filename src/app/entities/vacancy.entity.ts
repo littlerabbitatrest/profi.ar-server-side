@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from '@nonameteam/core';
 
 import { IVacancy } from '@app/interfaces';
@@ -21,8 +21,8 @@ export class Vacancy extends BaseEntity implements IVacancy {
   @ManyToOne(() => Scope, scope => scope.vacancies, { onDelete: 'CASCADE' })
     scope: Scope;
 
-  @ManyToMany(() => Category, category => category.vacancies, { onDelete: 'CASCADE' })
-    categories: Category[];
+  @ManyToOne(() => Category, category => category.vacancies, { onDelete: 'CASCADE' })
+    category: Category;
 
   @OneToMany(() => VacancyReview, vacancyReview => vacancyReview.vacancy)
     vacancyReviews: VacancyReview[];
