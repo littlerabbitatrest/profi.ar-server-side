@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { CustomerRepository } from '@app/repositories/customer';
 import { SpecialistRepository } from '@app/repositories/specialist';
-import { IDecodeToken } from '@app/guards';
+import { checkStructure, IDecodeToken } from '@app/guards';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -16,7 +16,7 @@ export class RoleGuard implements CanActivate {
 
   ) { }
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     if (!roles) {
@@ -24,18 +24,21 @@ export class RoleGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    const jwt = verify(request.headers.authorization, process.env.JWT_ACCESS_SECRET) as IDecodeToken;
+    const [method, token] = request.headers.authorization.split(' ');
+    const jwt = verify(token, process.env.JWT_ACCESS_SECRET) as IDecodeToken;
     let user = null;
     let hasPermission = false;
 
-    if (jwt.role === 'specialist') {
-      user = this.specialistRep.getById({ id: jwt.id });
-      user.role = 'specialist';
-    }
-    if (jwt.role === 'common' || jwt.role === 'admin') {
-      user = this.customerRep.getById({ id: jwt.id });
-      const roles = { 0: 'common', 1: 'admin' };
-      user.role = roles[user.role];
+    if (checkStructure(jwt)) {
+      if (jwt.role === 'specialist') {
+        user = await this.specialistRep.getById({ id: jwt.id });
+        user.role = 'specialist';
+      }
+      if (jwt.role.toString() === 'common' || jwt.role.toString() === 'admin') {
+        user = await this.customerRep.getById({ id: jwt.id.toString() });
+        const roles = { 0: 'common', 1: 'admin' };
+        user.role = roles[user.role];
+      }
     }
 
     const hasRole = () => roles.indexOf(user.role) > -1;

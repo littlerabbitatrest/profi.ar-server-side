@@ -33,7 +33,6 @@ export class CustomerReviewRepository extends Repository<CustomerReview> {
       'specialist.id', 'specialist.firstName', 'specialist.lastName', 'specialist.photoLink', 'customer.id',
       'customer.firstName', ' customer.lastName', 'customer.photoLink']);
 
-
     return query.getMany();
   }
 }

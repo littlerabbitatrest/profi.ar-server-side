@@ -18,31 +18,23 @@ export class JWTGuard implements CanActivate {
     @InjectRepository(SpecialistRepository) private readonly specialistRep: SpecialistRepository,
   ) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
     const jwt = this.pickJWT(request.headers.authorization);
 
     let user = null;
 
-    if (this.checkStructure(jwt)) {
+    if (checkStructure(jwt)) {
       if (jwt.role === 'specialist') {
-        user = this.specialistRep.getById({ id: jwt.id });
+        user = await this.specialistRep.getById({ id: jwt.id });
       }
 
       if (jwt.role === 'common' || jwt.role === 'admin') {
-        user = this.customerRep.getById({ id: jwt.id });
+        user = await this.customerRep.getById({ id: jwt.id });
       }
     }
     return Boolean(user);
-  }
-
-  checkStructure(JWT: unknown): JWT is IDecodeToken {
-    if (isPortalWebToken(JWT)) {
-      return true;
-    }
-
-    throw new HttpException('Некорректная структура токена авторизации', HttpStatus.UNAUTHORIZED);
   }
 
   pickJWT(authorization: string) {
@@ -71,3 +63,11 @@ export class JWTGuard implements CanActivate {
     }
   }
 }
+
+export const checkStructure = (JWT: unknown): JWT is IDecodeToken => {
+  if (isPortalWebToken(JWT)) {
+    return true;
+  }
+
+  throw new HttpException('Некорректная структура токена авторизации', HttpStatus.UNAUTHORIZED);
+};

@@ -28,8 +28,7 @@ export class OrderRepository extends Repository<Order> {
       .leftJoin('order.vacancy', 'vacancy')
       .innerJoin('order.scope', 'scope')
       .innerJoin('order.category', 'category')
-      .innerJoin('vacancy.specialist', 'specialist')
-      .where('1=1');
+      .innerJoin('vacancy.specialist', 'specialist');
 
     if (scopeId) {
       query.andWhere('order.score = :scopeId', { scopeId });
