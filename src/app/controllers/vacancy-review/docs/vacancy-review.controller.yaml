@@ -1,4 +1,4 @@
-- /customerReviews:
+- /vacancyReviews:
     post:
       tags:
         - 'Комментарии для вакансий'
@@ -45,7 +45,7 @@
             items:
               $ref: '#/definitions/GetVacancyReviewsResponse'
 
-- /customerReviews/{id}:
+- /vacancyReviews/{id}:
     get:
       tags:
         - 'Комментарии для вакансий'
