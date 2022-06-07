@@ -1,0 +1,47 @@
+- GetCustomerReviewResponse:
+    properties:
+      id:
+        type: 'string'
+      createdAt:
+        type: 'string'
+        format: 'date'
+      updatedAt:
+        type: 'string'
+        format: 'date'
+      rate:
+        type: 'number'
+      description:
+        type: 'string'
+      specialist:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          firstName:
+            type: 'string'
+          lastName:
+            type: 'string'
+          photoLink:
+            type: 'string'
+      vacancy:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          category:
+            type: 'object'
+            properties:
+              title:
+                type: 'string'
+      customer:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          firstName:
+            type: 'string'
+          lastName:
+            type: 'string'

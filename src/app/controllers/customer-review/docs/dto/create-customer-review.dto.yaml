@@ -1,0 +1,15 @@
+- CreateCustomerReviewDto:
+    properties:
+      rate:
+        type: 'number'
+      description:
+        type: 'string'
+      specialistId:
+        type: 'string'
+        format: 'uuid'
+      vacancyId:
+        type: 'string'
+        format: 'uuid'
+      customerId:
+        type: 'string'
+        format: 'uuid'

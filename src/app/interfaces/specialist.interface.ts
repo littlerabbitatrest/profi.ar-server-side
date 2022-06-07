@@ -9,6 +9,7 @@ export interface ISpecialist extends BaseEntity{
   email: string;
   phone: string;
   password: string;
+  token: string;
   location: ILocation;
   vacancies: IVacancy[];
 }

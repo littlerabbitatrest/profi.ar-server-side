@@ -1,0 +1,118 @@
+- /scopes:
+    post:
+      tags:
+        - 'Сфера деятельности'
+      summary: 'Создание сферы деятельности'
+      operationId: 'createScope'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createScopeDto'
+          requires: true
+          description: 'Информация о сфере деятельности'
+          schema:
+            $ref: '#/definitions/CreateScopeDto'
+      responses:
+        '201':
+          description: 'Сфера деятельности успешно создана'
+          schema:
+            $ref: '#/definitions/GetScopeResponse'
+    get:
+      tags:
+        - 'Сфера деятельности'
+      summary: 'Получение всех сфер деятельности'
+      operationId: 'getAllScopes'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      responses:
+        '200':
+          description: 'Сферы деятельности успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetScopesResponse'
+
+- /scopes/{id}:
+    get:
+      tags:
+        - 'Сфера деятельности'
+      summary: 'Получение сферы деятельности по идентификатору'
+      operationId: 'getScope'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор сферы деятельности'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Сфера деятельности успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetScopeResponse'
+    put:
+      tags:
+        - 'Сфера деятельности'
+      summary: 'Обновление сферы деятельности'
+      operationId: 'updateScope'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор сферы деятельности'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateScopeDto'
+          requires: true
+          description: 'Информация о сфере деятельности'
+          schema:
+            $ref: '#/definitions/UpdateScopeDto'
+      responses:
+        '201':
+          description: 'Сфера деятельности успешно обновлен'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetScopeResponse'
+    delete:
+      tags:
+        - 'Сфера деятельности'
+      summary: 'Удаление сферы деятельности'
+      operationId: 'deleteScope'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор сферы деятельности'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Сфера деятельности успешно удален'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/DeleteScopeResponse'

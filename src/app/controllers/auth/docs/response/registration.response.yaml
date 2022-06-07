@@ -1,0 +1,4 @@
+- RegistrationResponse:
+    properties:
+      token:
+        type: 'string'

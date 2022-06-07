@@ -1,0 +1,147 @@
+- /orders:
+    post:
+      tags:
+        - 'Заказы'
+      summary: 'Создание заказа'
+      operationId: 'createOrder'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createOrderDto'
+          requires: true
+          description: 'Информация о заказе'
+          schema:
+            $ref: '#/definitions/CreateOrderDto'
+      responses:
+        '201':
+          description: 'Заказ успешно создан'
+          schema:
+            $ref: '#/definitions/GetOrderResponse'
+    get:
+      tags:
+        - 'Заказы'
+      summary: 'Получение всех заказов'
+      operationId: 'getAllOrders'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'customerId'
+          requires: false
+          description: 'Идентификатор заказчика'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'vacancyId'
+          requires: false
+          description: 'Идентификатор вакансии'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'scopeId'
+          requires: false
+          description: 'Идентификатор сферы деятельности'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'categoryId'
+          requires: false
+          description: 'Идентификатор категории'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Заказы успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetOrdersResponse'
+
+- /orders/{id}:
+    get:
+      tags:
+        - 'Заказы'
+      summary: 'Получение заказа по идентификатору'
+      operationId: 'getOrder'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор заказа'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Заказ успешно получен'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetOrderResponse'
+    put:
+      tags:
+        - 'Заказы'
+      summary: 'Обновление заказа'
+      operationId: 'updateOrder'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор заказа'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateOrderDto'
+          requires: true
+          description: 'Информация о заказе'
+          schema:
+            $ref: '#/definitions/UpdateOrderDto'
+      responses:
+        '201':
+          description: 'Заказ успешно обновлен'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetOrderResponse'
+    delete:
+      tags:
+        - 'Заказы'
+      summary: 'Удаление заказа'
+      operationId: 'deleteOrder'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор заказа'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Заказ успешно удален'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/DeleteOrderResponse'

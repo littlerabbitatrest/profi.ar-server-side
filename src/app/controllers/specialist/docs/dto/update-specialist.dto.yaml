@@ -1,0 +1,16 @@
+- UpdateSpecialistDto:
+    properties:
+      firstName:
+        type: 'string'
+      lastName:
+        type: 'string'
+      photoLink:
+        type: 'string'
+      email:
+        type: 'string'
+        format: 'email'
+      phone:
+        type: 'string'
+      locationId:
+        type: 'string'
+        format: 'uuid'

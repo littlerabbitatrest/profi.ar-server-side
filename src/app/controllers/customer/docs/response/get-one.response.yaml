@@ -1,0 +1,35 @@
+- GetCustomerResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      firstName:
+        type: 'string'
+      lastName:
+        type: 'string'
+      photoLink:
+        type: 'string'
+      email:
+        type: 'string'
+      phone:
+        type: 'string'
+      commonRate:
+        type: 'number'
+      role:
+        type: 'number'
+        enum:
+          - 0
+          - 1
+      location:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          city:
+            type: 'string'
+          state:
+            type: 'object'
+            properties:
+              name:
+                type: 'string'

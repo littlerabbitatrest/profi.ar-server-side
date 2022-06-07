@@ -1,0 +1,120 @@
+- /customerReviews:
+    post:
+      tags:
+        - 'Комментарии для заказчиков'
+      summary: 'Создание комментариев для заказчиков'
+      operationId: 'createCustomerReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createCustomerReviewDto'
+          required: true
+          description: 'Информация о комментарии'
+          schema:
+            $ref: '#/definitions/CreateCustomerReviewDto'
+      responses:
+        '201':
+          description: 'Комментарий успешно создан'
+          schema:
+            $ref: '#/definitions/GetCustomerReviewResponse'
+    get:
+      tags:
+        - 'Комментарии для заказчиков'
+      summary: 'Получение всех комментариев для заказчиков с опциональным параметром '
+      operationId: 'getAllCustomerReviews'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'customerId'
+          required: false
+          description: 'Идентификатор заказчика'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Комментарий успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetCustomerReviewsResponse'
+
+- /customerReviews/{id}:
+    get:
+      tags:
+        - 'Комментарии для заказчиков'
+      summary: 'Получение комментария для заказчиков по идентификатору'
+      operationId: 'getCustomerReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Комментарий успешно получены'
+          schema:
+            $ref: '#/definitions/GetCustomerReviewResponse'
+    put:
+      tags:
+        - 'Комментарии для заказчиков'
+      summary: 'Обновление комментария для заказчиков по идентификатору'
+      operationId: 'updateCustomerReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateCustomerReviewDto'
+          required: true
+          description: 'Информация о комментарии'
+          schema:
+            $ref: '#/definitions/UpdateCustomerReviewDto'
+      responses:
+        '201':
+          description: 'Комментарий успешно обновлен'
+          schema:
+            $ref: '#/definitions/GetCustomerReviewResponse'
+    delete:
+      tags:
+        - 'Комментарии для заказчиков'
+      summary: 'Удаление комментария для заказчиков по идентификатору'
+      operationId: 'deleteCustomerReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Комментарий успешно удален'
+          schema:
+            $ref: '#/definitions/DeleteCustomerReviewResponse'

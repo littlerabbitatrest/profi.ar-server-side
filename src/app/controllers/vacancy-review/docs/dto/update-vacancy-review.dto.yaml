@@ -1,0 +1,7 @@
+- UpdateVacancyReviewDto:
+    properties:
+      rate:
+        type: 'number'
+      description:
+        type: 'string'
+

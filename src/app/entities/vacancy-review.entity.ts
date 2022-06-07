@@ -4,7 +4,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { IVacancyReview } from '@app/interfaces';
 import { Customer, Vacancy } from '@app/entities';
 
-@Entity({ name: 'Reviews' })
+@Entity({ name: 'VacancyReviews' })
 export class VacancyReview extends BaseEntity implements IVacancyReview {
   @Column({ type: 'integer' })
     rate: number;

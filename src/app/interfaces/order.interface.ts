@@ -1,11 +1,14 @@
 import { BaseEntity } from '@nonameteam/core';
 
-import { ICustomer, IScope, IVacancy } from '@app/interfaces';
+import { ICategory, ICustomer, IScope, IVacancy } from '@app/interfaces';
 
 export enum Statuses {
-  newOrder,
-  acceptedOrder,
-  completedOrder,
+  moderationOrder = 'moderation',
+  rejectedOrder = 'rejected',
+  openOder = 'open',
+  acceptedOrder = 'accepted',
+  completedOrder = 'completed',
+  canceledOrder = 'canceled'
 }
 
 export interface IOrder extends BaseEntity {
@@ -16,4 +19,5 @@ export interface IOrder extends BaseEntity {
   customer: ICustomer;
   vacancy: IVacancy;
   scope: IScope;
+  category: ICategory;
 }

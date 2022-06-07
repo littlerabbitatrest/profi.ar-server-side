@@ -1,0 +1,110 @@
+- /categories:
+    post:
+      tags:
+        - 'Категории'
+      summary: 'Создание категории'
+      operationId: 'createCategory'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createCategoryDto'
+          required: true
+          description: 'Информация о категории'
+          schema:
+            $ref: '#/definitions/CreateCategoryDto'
+      responses:
+        '201':
+          description: 'Категория успешно создана'
+          schema:
+            $ref: '#/definitions/CreateCategoryResponse'
+    get:
+      tags:
+        - 'Категории'
+      summary: 'Получение всех категорий с опциональным параметром'
+      operationId: 'getAllCategories'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'scopeId'
+          required: false
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о категориях успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetCategoriesResponse'
+
+- /categories/{id}:
+    get:
+      tags:
+        - 'Категории'
+      summary: 'Получение категории по id'
+      operationId: 'getCategory'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор категории'
+      responses:
+        '200':
+          description: 'Информация о категории успешно получена'
+          schema:
+            $ref: '#/definitions/GetCategoryResponse'
+    put:
+      tags:
+        - 'Категории'
+      summary: 'Обновление категории'
+      operationId: 'updateCategory'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор категории'
+        - in: 'body'
+          name: 'updateCategoryDto'
+          required: true
+          description: 'Информация о категории'
+          schema:
+            $ref: '#/definitions/UpdateCategoryDto'
+      responses:
+        '200':
+          description: 'Категория успешно обновлена'
+          schema:
+            $ref: '#/definitions/GetCategoryResponse'
+    delete:
+      tags:
+        - 'Категории'
+      summary: 'Удаление категории'
+      operationId: 'deleteCategory'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор категории'
+      responses:
+        '200':
+          description: 'Категория успешно удалена'
+          schema:
+            $ref: '#/definitions/DeleteCategoryResponse'

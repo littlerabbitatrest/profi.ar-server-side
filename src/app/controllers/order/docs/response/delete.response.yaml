@@ -1,0 +1,65 @@
+- DeleteOrderResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      title:
+        type: 'string'
+      description:
+        type: 'string'
+      price:
+        type: 'number'
+      status:
+        type: 'string'
+        enum:
+          - moderation
+          - rejected
+          - open
+          - accepted
+          - completed
+          - canceled
+      customer:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          firstName:
+            type: 'string'
+          lastName:
+            type: 'string'
+          photoLink:
+            type: 'string'
+      vacancy:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          specialist:
+            type: 'object'
+            properties:
+              id:
+                type: 'string'
+                format: 'uuid'
+              firstName:
+                type: 'string'
+              lastName:
+                type: 'string'
+              photoLink:
+                type: 'string'
+      scope:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+          name:
+            type: 'string'
+      category:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          title:
+            type: 'string'

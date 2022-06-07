@@ -1,9 +1,10 @@
 import { BaseEntity } from '@nonameteam/core';
-import { Column, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 
 import { Customer, Specialist, Vacancy } from '@app/entities';
 import { ICustomerReview } from '@app/interfaces';
 
+@Entity({ name: 'CustomerReviews' })
 export class CustomerReview extends BaseEntity implements ICustomerReview {
   @Column({ type: 'integer' })
     rate: number;

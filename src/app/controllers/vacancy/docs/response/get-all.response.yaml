@@ -1,0 +1,39 @@
+- GetVacanciesResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      education:
+        type: 'string'
+      experience:
+        type: 'string'
+      commonRate:
+        type: 'number'
+      specialist:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          firstName:
+            type: 'string'
+          lastName:
+            type: 'string'
+          photoLink:
+            type: 'string'
+      scope:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          name:
+            type: 'string'
+      category:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          title:
+            type: 'string'

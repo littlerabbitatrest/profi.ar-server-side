@@ -1,6 +1,8 @@
 import { BaseEntity } from '@nonameteam/core';
 
+import { IState } from '@app/interfaces';
+
 export interface ILocation extends BaseEntity {
-  state: string;
   city: string;
+  state: IState;
 }

@@ -1,0 +1,96 @@
+- /customers:
+    get:
+      tags:
+        - 'Заказчики'
+      summary: 'Получение всех заказчиков с опциональным параметром локации'
+      operationId: 'getAllCustomers'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'locationId'
+          required: false
+          description: 'id локации'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о заказчиках успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetCustomersResponse'
+
+- /customers/{id}:
+    get:
+      tags:
+        - 'Заказчики'
+      summary: 'Получение заказчика по id'
+      operationId: 'getCustomer'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор заказчика'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о заказчике успешно получена'
+          schema:
+            $ref: '#/definitions/GetCustomerResponse'
+    put:
+      tags:
+        - 'Заказчики'
+      summary: 'Обновление заказчика'
+      operationId: 'updateCustomer'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор заказчика'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'dto'
+          required: true
+          description: 'Информация о заказчике'
+          schema:
+            $ref: '#/definitions/UpdateCustomerDto'
+      responses:
+        '200':
+          description: 'Заказчик успешно обновлен'
+          schema:
+            $ref: '#/definitions/GetCustomerResponse'
+    delete:
+      tags:
+        - 'Заказчики'
+      summary: 'Удаление заказчика'
+      operationId: 'deleteCustomer'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор заказчика'
+      responses:
+        '200':
+          description: 'Заказчик успешно удален'
+          schema:
+            $ref: '#/definitions/DeleteCustomerResponse'

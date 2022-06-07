@@ -1,10 +1,10 @@
-import { IVacancy } from '@app/interfaces/vacancy.interface';
-import { ICustomer } from '@app/interfaces/customer.interface';
-import { ISpecialist } from '@app/interfaces/specialist.interface';
+import { BaseEntity } from '@nonameteam/core';
 
-export interface ICustomerReview {
-  description: string;
+import { IVacancy, ISpecialist, ICustomer } from '@app/interfaces';
+
+export interface ICustomerReview extends BaseEntity {
   rate: number;
+  description: string;
   specialist: ISpecialist;
   vacancy: IVacancy;
   customer: ICustomer;

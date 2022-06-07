@@ -8,7 +8,7 @@ export interface IVacancy extends BaseEntity {
   commonRate: number;
   specialist: ISpecialist;
   scope: IScope;
-  categories: ICategory[];
+  category: ICategory;
   orders: IOrder[];
   vacancyReviews: IVacancyReview[];
 }

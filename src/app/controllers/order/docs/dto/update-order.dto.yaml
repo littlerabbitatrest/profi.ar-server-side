@@ -1,0 +1,19 @@
+- UpdateOrderDto:
+    properties:
+      title:
+        type: 'string'
+      description:
+        type: 'string'
+      price:
+        type: 'number'
+      status:
+        type: 'string'
+        enum:
+          - rejected
+          - open
+          - accepted
+          - completed
+          - canceled
+      vacancyId:
+        type: 'string'
+        format: 'uuid'

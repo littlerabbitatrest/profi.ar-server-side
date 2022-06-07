@@ -1,0 +1,12 @@
+- CreateVacancyReviewDto:
+    properties:
+      rate:
+        type: 'number'
+      description:
+        type: 'string'
+      vacancyId:
+        type: 'string'
+        format: 'uuid'
+      customerId:
+        type: 'string'
+        format: 'uuid'
