@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { isPortalWebToken } from '@src/utils';
 import { CustomerRepository } from '@app/repositories/customer';
 import { SpecialistRepository } from '@app/repositories/specialist';
-import { FastifyRequest } from 'fastify';
 
 export interface IDecodeToken {
   id: string,
