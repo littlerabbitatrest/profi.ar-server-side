@@ -15,6 +15,7 @@ export interface ICustomer extends BaseEntity {
   phone: string;
   password: string;
   commonRate: number;
+  token: string;
   role: Roles;
   location: ILocation;
   orders: IOrder[];

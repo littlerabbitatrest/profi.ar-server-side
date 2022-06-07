@@ -1,0 +1,118 @@
+- /states:
+    post:
+      tags:
+        - 'Округ/область'
+      summary: 'Создание округа/области'
+      operationId: 'createState'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createStateDto'
+          requires: true
+          description: 'Информация о округе/области'
+          schema:
+            $ref: '#/definitions/CreateStateDto'
+      responses:
+        '201':
+          description: 'Округ/область успешно создана'
+          schema:
+            $ref: '#/definitions/GetStateResponse'
+    get:
+      tags:
+        - 'Округ/область'
+      summary: 'Получение всех округов/областей'
+      operationId: 'getAllStates'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      responses:
+        '200':
+          description: 'Округа/области успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetStatesResponse'
+
+- /states/{id}:
+    get:
+      tags:
+        - 'Округ/область'
+      summary: 'Получение округа/области по идентификатору'
+      operationId: 'getState'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор округа/области'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Округ/область успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetStateResponse'
+    put:
+      tags:
+        - 'Округ/область'
+      summary: 'Обновление округа/области'
+      operationId: 'updateState'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор округа/области'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateStateDto'
+          requires: true
+          description: 'Информация о округе/области'
+          schema:
+            $ref: '#/definitions/UpdateStateDto'
+      responses:
+        '201':
+          description: 'Округ/область успешно обновлен'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetStateResponse'
+    delete:
+      tags:
+        - 'Округ/область'
+      summary: 'Удаление округа/области'
+      operationId: 'deleteState'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор округа/области'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Округ/область успешно удален'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/DeleteStateResponse'

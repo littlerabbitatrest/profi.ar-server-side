@@ -1,0 +1,6 @@
+- GetScopesResponse:
+    properties:
+      id:
+        type: 'string'
+      name:
+        type: 'string'

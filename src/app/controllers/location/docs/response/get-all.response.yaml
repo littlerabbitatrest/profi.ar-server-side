@@ -1,0 +1,15 @@
+- GetLocationsResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      city:
+        type: 'string'
+      state:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          name:
+            type: 'string'

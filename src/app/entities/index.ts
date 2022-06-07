@@ -7,3 +7,5 @@ export * from './scope.entity';
 export * from './location.entity';
 export * from './vacancy.entity';
 export * from './customer-review.entity';
+export * from './state.entity';
+

@@ -1,0 +1,66 @@
+- /auth/login:
+    post:
+      tags:
+        - 'Авторизация'
+      summary: 'Авторизовать пользователя'
+      description: 'Авторизовать пользователя'
+      operationId: 'login'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'dto'
+          required: true
+          description: 'Информация о пользователе'
+          schema:
+            $ref: '#/definitions/LoginDto'
+        - in: 'query'
+          name: 'role'
+          required: true
+          description: 'Роль пользователя'
+          schema:
+            type: string
+            enum:
+              - customer
+              - specialist
+      responses:
+        '201':
+          description: 'Пользователь авторизован'
+          schema:
+            $ref: '#/definitions/LoginResponse'
+
+- /auth/registration:
+    post:
+      tags:
+        - 'Авторизация'
+      summary: 'Зарегистрировать пользователя'
+      description: 'Зарегистрировать пользователя'
+      operationId: 'registration'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'dto'
+          required: true
+          description: 'Информация о пользователе'
+          schema:
+            $ref: '#/definitions/RegistrationDto'
+        - in: 'query'
+          name: 'role'
+          required: true
+          description: 'Роль пользователя'
+          schema:
+            type: string
+            enum:
+              - customer
+              - specialist
+      responses:
+        '201':
+          description: 'Пользователь успешно зарегистрирован'
+          schema:
+            $ref: '#/definitions/RegistrationResponse'
+

@@ -1,0 +1,122 @@
+- /vacancies:
+    post:
+      tags:
+        - 'Вакансии'
+      summary: 'Создание вакансии'
+      operationId: 'createVacancy'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createVacancyDto'
+          required: true
+          description: 'Информация о вакансии'
+          schema:
+            $ref: '#/definitions/CreateVacancyDto'
+      responses:
+        '201':
+          description: 'Вакансия успешно создана'
+          schema:
+            $ref: '#/definitions/CreateVacancyResponse'
+    get:
+      tags:
+        - 'Вакансии'
+      summary: 'Получение всех категорий с опциональными параметрами'
+      operationId: 'getAllVacancies'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'specialistId'
+          required: false
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'scopeId'
+          required: false
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'categoryId'
+          required: false
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о вакансиях успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetVacanciesResponse'
+
+- /vacancies/{id}:
+    get:
+      tags:
+        - 'Вакансии'
+      summary: 'Получение вакансии по id'
+      operationId: 'getVacancy'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор вакансии'
+      responses:
+        '200':
+          description: 'Информация о вакансии успешно получена'
+          schema:
+            $ref: '#/definitions/GetVacancyResponse'
+    put:
+      tags:
+        - 'Вакансии'
+      summary: 'Обновление вакансии'
+      operationId: 'updateVacancy'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор вакансии'
+        - in: 'body'
+          name: 'updateVacancyDto'
+          required: true
+          description: 'Информация о вакансии'
+          schema:
+            $ref: '#/definitions/UpdateVacancyDto'
+      responses:
+        '200':
+          description: 'Вакансия успешно обновлена'
+          schema:
+            $ref: '#/definitions/GetVacancyResponse'
+    delete:
+      tags:
+        - 'Вакансии'
+      summary: 'Удаление вакансии'
+      operationId: 'deleteVacancy'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор вакансии'
+      responses:
+        '200':
+          description: 'Вакансия успешно удалена'
+          schema:
+            $ref: '#/definitions/DeleteVacancyResponse'

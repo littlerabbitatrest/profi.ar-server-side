@@ -12,7 +12,7 @@ export class Specialist extends BaseEntity implements ISpecialist {
   @Column({ type: 'varchar', length: 50 })
     lastName: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, nullable: true })
     photoLink: string;
 
   @Column({ type: 'varchar', length: 50 })
@@ -21,8 +21,11 @@ export class Specialist extends BaseEntity implements ISpecialist {
   @Column({ type: 'varchar', length: 13 })
     phone: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 200 })
     password: string;
+
+  @Column({ type: 'varchar', nullable: true, select: false })
+    token: string;
 
   @ManyToOne(() => Location, location => location.specialists)
     location: Location;

@@ -1,0 +1,126 @@
+- /locations:
+    post:
+      tags:
+        - 'Местоположение'
+      summary: 'Создание местоположения'
+      operationId: 'createLocation'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createLocationDto'
+          requires: true
+          description: 'Информация о местоположении'
+          schema:
+            $ref: '#/definitions/CreateLocationDto'
+      responses:
+        '201':
+          description: 'Местоположение успешно создано'
+          schema:
+            $ref: '#/definitions/GetLocationResponse'
+    get:
+      tags:
+        - 'Местоположение'
+      summary: 'Получение всех местоположений'
+      operationId: 'getAllLocations'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'stateId'
+          requires: false
+          description: 'Идентификатор округа/области'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Местоположения успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetLocationsResponse'
+
+- /locations/{id}:
+    get:
+      tags:
+        - 'Местоположение'
+      summary: 'Получение местоположения по идентификатору'
+      operationId: 'getLocation'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор местоположения'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Местоположение успешно получено'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetLocationResponse'
+    put:
+      tags:
+        - 'Местоположение'
+      summary: 'Обновление местоположения'
+      operationId: 'updateLocation'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор местоположения'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateLocationDto'
+          requires: true
+          description: 'Информация о местоположении'
+          schema:
+            $ref: '#/definitions/UpdateLocationDto'
+      responses:
+        '201':
+          description: 'Местоположение успешно обновлено'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetLocationResponse'
+    delete:
+      tags:
+        - 'Местоположение'
+      summary: 'Удаление местоположения'
+      operationId: 'deleteLocation'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          requires: true
+          description: 'Идентификатор местоположения'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Местоположение успешно удалено'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/DeleteLocationResponse'

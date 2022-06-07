@@ -12,7 +12,7 @@ export class Customer extends BaseEntity implements ICustomer {
   @Column({ type: 'varchar', length: 50 })
     lastName: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, nullable: true })
     photoLink: string;
 
   @Column({ type: 'varchar', length: 50 })
@@ -21,11 +21,14 @@ export class Customer extends BaseEntity implements ICustomer {
   @Column({ type: 'varchar', length: 13 })
     phone: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 200 })
     password: string;
 
   @Column({ type: 'integer', default: 0 })
     commonRate: number;
+
+  @Column({ type: 'varchar', nullable: true, select: false })
+    token: string;
 
   @Column({ type: 'enum', enum: Roles, default: Roles.common })
     role: Roles;

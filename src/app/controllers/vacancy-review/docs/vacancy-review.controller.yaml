@@ -1,0 +1,120 @@
+- /customerReviews:
+    post:
+      tags:
+        - 'Комментарии для вакансий'
+      summary: 'Создание комментариев для вакансий'
+      operationId: 'createVacancyReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'createVacancyReviewDto'
+          required: true
+          description: 'Информация о комментарии'
+          schema:
+            $ref: '#/definitions/CreateVacancyReviewDto'
+      responses:
+        '201':
+          description: 'Комментарий успешно создан'
+          schema:
+            $ref: '#/definitions/GetVacancyReviewResponse'
+    get:
+      tags:
+        - 'Комментарии для вакансий'
+      summary: 'Получение всех комментариев для вакансий с опциональным параметром '
+      operationId: 'getAllVacancyReviews'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'vacancyId'
+          required: false
+          description: 'Идентификатор вакансии'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Комментарий успешно получены'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetVacancyReviewsResponse'
+
+- /customerReviews/{id}:
+    get:
+      tags:
+        - 'Комментарии для вакансий'
+      summary: 'Получение комментария для вакансий по идентификатору'
+      operationId: 'getVacancyReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Комментарий успешно получены'
+          schema:
+            $ref: '#/definitions/GetVacancyReviewResponse'
+    put:
+      tags:
+        - 'Комментарии для вакансий'
+      summary: 'Обновление комментария для вакансий по идентификатору'
+      operationId: 'updateVacancyReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'updateVacancyReviewDto'
+          required: true
+          description: 'Информация о комментарии'
+          schema:
+            $ref: '#/definitions/UpdateVacancyReviewDto'
+      responses:
+        '201':
+          description: 'Комментарий успешно обновлен'
+          schema:
+            $ref: '#/definitions/GetVacancyReviewResponse'
+    delete:
+      tags:
+        - 'Комментарии для вакансий'
+      summary: 'Удаление комментария для вакансий по идентификатору'
+      operationId: 'deleteVacancyReview'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор комментария'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '201':
+          description: 'Комментарий успешно удален'
+          schema:
+            $ref: '#/definitions/DeleteVacancyReviewResponse'
