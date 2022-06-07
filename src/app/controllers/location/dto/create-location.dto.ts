@@ -1,11 +1,11 @@
-import { IsString, Length } from 'class-validator';
-
-import { IState } from '@app/interfaces';
+import { IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateLocationDto {
   @IsString()
   @Length(1, 100)
     city: string;
 
-  state: IState;
+  /* Ключи*/
+  @IsUUID()
+    stateId: string;
 }

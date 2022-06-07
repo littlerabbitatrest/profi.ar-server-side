@@ -1,13 +1,23 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IGetVacancyReviewResponseData {
+export interface IGetVacancyReviewResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   rate: number;
   description: string;
-}
-
-export interface IGetVacancyReviewResponse extends IBaseResponse{
-  data: IGetVacancyReviewResponseData;
+  vacancy: {
+    id: string;
+    specialist: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      photoLink: string;
+    };
+    category: {
+      id: string;
+      title: string;
+    };
+  };
+  customer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
 }

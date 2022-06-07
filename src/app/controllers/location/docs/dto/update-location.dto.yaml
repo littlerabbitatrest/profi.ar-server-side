@@ -1,0 +1,7 @@
+- UpdateLocationDto:
+    properties:
+      city:
+        type: 'string'
+      stateId:
+        type: 'string'
+        format: 'uuid'

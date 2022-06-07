@@ -1,20 +1,25 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-import { ICustomer, ISpecialist, IVacancy } from '@app/interfaces';
-
-export interface IGetCustomerReviewResponseDataItem {
+export interface IGetCustomerReviewItemResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   description: string;
   rate: number;
-  specialist: ISpecialist;
-  vacancy: IVacancy;
-  customer: ICustomer;
+  vacancy: {
+    id: string;
+    category: {
+      title: string;
+    };
+  };
+  specialist: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photoLink: string;
+  };
+  customer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 
-export type IGetCustomersReviewResponseData = IGetCustomerReviewResponseDataItem[];
+export type IGetCustomerReviewsResponse = IGetCustomerReviewItemResponse[];
 
-export interface IGetCustomerReviewsResponse extends IBaseResponse{
-  data: IGetCustomersReviewResponseData;
-}

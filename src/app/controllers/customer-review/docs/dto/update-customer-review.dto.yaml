@@ -1,0 +1,6 @@
+- UpdateCustomerReviewDto:
+    properties:
+      rate:
+        type: 'number'
+      description:
+        type: 'string'

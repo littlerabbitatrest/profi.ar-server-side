@@ -2,7 +2,7 @@ import { BaseEntity } from '@nonameteam/core';
 import { Column, Entity, OneToMany, ManyToOne } from 'typeorm';
 
 import { ICategory } from '@app/interfaces';
-import { Scope, Vacancy } from '@app/entities';
+import { Order, Scope, Vacancy } from '@app/entities';
 
 @Entity({ name: 'Categories' })
 export class Category extends BaseEntity implements ICategory {
@@ -14,4 +14,7 @@ export class Category extends BaseEntity implements ICategory {
 
   @OneToMany(() => Vacancy, vacancy => vacancy.category)
     vacancies: Vacancy[];
+
+  @OneToMany(() => Order, order => order.category)
+    orders: Order[];
 }

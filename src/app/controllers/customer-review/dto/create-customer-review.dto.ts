@@ -1,6 +1,4 @@
-import { IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
-
-import { ICustomer, ISpecialist, IVacancy } from '@app/interfaces';
+import { IsInt, IsOptional, IsString, IsUUID, Length, Max, Min } from 'class-validator';
 
 export class CreateCustomerReviewDto {
   @IsInt()
@@ -11,10 +9,15 @@ export class CreateCustomerReviewDto {
   @IsOptional()
   @IsString()
   @Length(1, 1000)
-    description?: string;
+    description: string;
 
-  /* Отношения*/
-  specialist: ISpecialist;
-  vacancy: IVacancy;
-  customer: ICustomer;
+  /* Ключи*/
+  @IsUUID()
+    specialistId: string;
+
+  @IsUUID()
+    vacancyId: string;
+
+  @IsUUID()
+    customerId: string;
 }

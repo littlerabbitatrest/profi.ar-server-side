@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 
 import { OrderService } from '@app/services/order';
 import {
@@ -9,20 +8,24 @@ import {
   IGetOrderResponse,
   UpdateOrderDto
 } from '@app/controllers/order';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('orders')
+@UseGuards(JWTGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
-  async getAllOrders(): Promise<IGetOrdersResponse> {
-    const orders = await this.orderService.getAllOrders();
+  async getAllOrders(
+    @Query('customerId') customerId?: string,
+    @Query('vacancyId') vacancyId?: string,
+    @Query('scopeId') scopeId?: string,
+    @Query('categoryId') categoryId?: string,
+  ): Promise<IGetOrdersResponse> {
+    const orders = await this.orderService.getAllOrders({ customerId, scopeId, categoryId, vacancyId });
 
-    if (orders) {
-      return CreateResponse(orders, true);
-    }
-
-    return CreateResponse(null, false, 'Заказы не были найдены');
+    return orders;
   }
 
   @Get(':id')
@@ -31,24 +34,18 @@ export class OrderController {
   ): Promise<IGetOrderResponse> {
     const order = await this.orderService.getOrder({ id });
 
-    if (order) {
-      return CreateResponse(order, true);
-    }
-
-    return CreateResponse(null, false, 'Заказ не был найден');
+    return order;
   }
 
   @Post()
+  @UseGuards(RoleGuard)
+  @Roles('common')
   async createOrder(
     @Body() createOrderDto: CreateOrderDto
   ): Promise<IGetOrderResponse> {
     const order = await this.orderService.createOrder(createOrderDto);
 
-    if (order) {
-      return CreateResponse(order, true);
-    }
-
-    return CreateResponse(null, false, 'Заказ не был создан');
+    return order;
   }
 
   @Put(':id')
@@ -58,23 +55,17 @@ export class OrderController {
   ): Promise<IGetOrderResponse> {
     const order = await this.orderService.updateOrder({ id }, updateOrderDto);
 
-    if (order) {
-      return CreateResponse(order, true);
-    }
-
-    return CreateResponse(null, false, 'Заказ не был обновлен');
+    return order;
   }
 
   @Delete(':id')
-  async removeOrder(
+  @UseGuards(RoleGuard)
+  @Roles('common', 'admin')
+  async deleteOrder(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteOrderResponse> {
     const order = await this.orderService.deleteOrder({ id });
 
-    if (order) {
-      return CreateResponse(order, true);
-    }
-
-    return CreateResponse(null, false, 'Заказ не был удален');
+    return order;
   }
 }

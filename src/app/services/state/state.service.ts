@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Transaction, TransactionRepository } from 'typeorm';
 
-import { ICreateState, IGetStateById, IUpdateState } from '@app/services/state';
-import { StateRepository } from '@app/repositories/state';
 import { IState } from '@app/interfaces';
+import { StateRepository } from '@app/repositories/state';
+import { ICreateState, IGetStateById, IUpdateState } from '@app/services/state';
 
 @Injectable()
 export class StateService {

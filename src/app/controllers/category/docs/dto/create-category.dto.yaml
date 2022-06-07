@@ -1,0 +1,7 @@
+- CreateCategoryDto:
+    properties:
+      title:
+        type: 'string'
+      scopeId:
+        type: 'string'
+        format: 'uuid'

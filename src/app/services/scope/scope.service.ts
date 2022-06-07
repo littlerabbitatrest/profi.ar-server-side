@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Transaction, TransactionRepository } from 'typeorm';
 
-import { ICreateScope, IGetScopeById, IUpdateScope } from '@app/services/scope';
-import { ScopeRepository } from '@app/repositories/scope';
 import { IScope } from '@app/interfaces';
+import { ScopeRepository } from '@app/repositories/scope';
+import { ICreateScope, IGetScopeById, IUpdateScope } from '@app/services/scope';
 
 @Injectable()
 export class ScopeService {

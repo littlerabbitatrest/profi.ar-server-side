@@ -1,5 +1,4 @@
-import { ILocation } from '@app/interfaces';
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsEmail, IsString, IsUUID, Length } from 'class-validator';
 
 export class UpdateSpecialistDto {
   @IsString()
@@ -21,10 +20,7 @@ export class UpdateSpecialistDto {
   @Length(12, 13)
     phone: string;
 
-  @IsString()
-  @Length(8, 20)
-    password: string;
-
-  /* Отношения*/
-  location: ILocation;
+  /* Ключи*/
+  @IsUUID()
+    locationId: string;
 }

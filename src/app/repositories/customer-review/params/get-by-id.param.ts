@@ -1,3 +1,3 @@
-export interface IGetById {
+export interface IGetByIdParam {
   id: string;
 }

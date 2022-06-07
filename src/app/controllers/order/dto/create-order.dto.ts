@@ -1,6 +1,4 @@
-import { IsNumber, IsString, Length, Max, Min } from 'class-validator';
-
-import { ICustomer, IScope } from '@app/interfaces';
+import { IsNumber, IsString, IsUUID, Length, Max, Min } from 'class-validator';
 
 export class CreateOrderDto {
   @IsString()
@@ -16,6 +14,13 @@ export class CreateOrderDto {
   @Max(1000)
     price: number;
 
-  customer: ICustomer;
-  scope: IScope;
+  /* Ключи*/
+  @IsUUID()
+    customerId: string;
+
+  @IsUUID()
+    scopeId: string;
+
+  @IsUUID()
+    categoryId: string;
 }

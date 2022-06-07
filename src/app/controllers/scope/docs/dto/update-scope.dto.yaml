@@ -1,0 +1,4 @@
+- UpdateScopeDto:
+    properties:
+      name:
+        type: 'string'

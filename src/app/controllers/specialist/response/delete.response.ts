@@ -1,17 +1,22 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IDeleteSpecialistResponseData {
+export interface IDeleteSpecialistResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   firstName: string;
   lastName: string;
   photoLink: string;
   email: string;
   phone: string;
-  password: string;
-}
-
-export interface IDeleteSpecialistResponse extends IBaseResponse {
-  data: IDeleteSpecialistResponseData;
+  vacancies: {
+    id: string;
+    category: {
+      id: string;
+      title: string;
+    };
+  }[];
+  location: {
+    id: string;
+    city: string;
+    state: {
+      name: string;
+    }
+  };
 }

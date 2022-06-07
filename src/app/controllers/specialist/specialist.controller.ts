@@ -1,29 +1,27 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Put, Query, UseGuards } from '@nestjs/common';
 
 import { SpecialistService } from '@app/services/specialist';
 import {
-  CreateSpecialistDto,
   IDeleteSpecialistResponse,
   IGetSpecialistsResponse,
   IGetSpecialistResponse,
-  UpdateSpecialistDto,
-  AuthorizationSpecialistDto
+  UpdateSpecialistDto
 } from '@app/controllers/specialist';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('specialists')
+@UseGuards(JWTGuard)
 export class SpecialistController {
   constructor(private readonly specialistService: SpecialistService) {}
 
   @Get()
-  async getAllSpecialists(): Promise<IGetSpecialistsResponse> {
-    const specialists = await this.specialistService.getAllSpecialists();
+  async getAllSpecialists(
+    @Query('locationId') locationId?: string,
+  ): Promise<IGetSpecialistsResponse> {
+    const specialists = await this.specialistService.getAllSpecialists({ locationId });
 
-    if (specialists) {
-      return CreateResponse(specialists, true);
-    }
-
-    return CreateResponse(null, false, 'Специалисты не были найдены');
+    return specialists;
   }
 
   @Get(':id')
@@ -32,63 +30,29 @@ export class SpecialistController {
   ): Promise<IGetSpecialistResponse> {
     const specialist = await this.specialistService.getSpecialist({ id });
 
-    if (specialist) {
-      return CreateResponse(specialist, true);
-    }
-
-    return CreateResponse(null, false, 'Специалист не был найден');
-  }
-
-  @Get('authorization')
-  async authorizationSpecialist(
-    @Body() authorizationSpecialistDto: AuthorizationSpecialistDto
-  ): Promise<IGetSpecialistResponse> {
-    const specialist = await this.specialistService.authorizationSpecialist({ ...authorizationSpecialistDto });
-
-    if (specialist) {
-      return CreateResponse(specialist, true);
-    }
-
-    return CreateResponse(null, false, 'Специалист не был найден');
-  }
-
-  @Post()
-  async createSpecialist(
-    @Body() createSpecialistDto: CreateSpecialistDto
-  ): Promise<IGetSpecialistResponse> {
-    const specialist = await this.specialistService.createSpecialist(createSpecialistDto);
-
-    if (specialist) {
-      return CreateResponse(specialist, true);
-    }
-
-    return CreateResponse(null, false, 'Специалист не был создан');
+    return specialist;
   }
 
   @Put(':id')
+  @UseGuards(RoleGuard)
+  @Roles('specialist')
   async updateSpecialist(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateSpecialistDto: UpdateSpecialistDto
   ): Promise<IGetSpecialistResponse> {
     const specialist = await this.specialistService.updateSpecialist({ id }, updateSpecialistDto);
 
-    if (specialist) {
-      return CreateResponse(specialist, true);
-    }
-
-    return CreateResponse(null, false, 'Специалист не был обновлен');
+    return specialist;
   }
 
   @Delete(':id')
-  async removeSpecialist(
+  @UseGuards(RoleGuard)
+  @Roles('specialist')
+  async deleteSpecialist(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteSpecialistResponse> {
     const specialist = await this.specialistService.deleteSpecialist({ id });
 
-    if (specialist) {
-      return CreateResponse(specialist, true);
-    }
-
-    return CreateResponse(null, false, 'Специалист не был удален');
+    return specialist;
   }
 }

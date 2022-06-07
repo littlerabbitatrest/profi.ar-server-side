@@ -1,0 +1,4 @@
+- CreateScopeDto:
+    properties:
+      name:
+        type: 'string'

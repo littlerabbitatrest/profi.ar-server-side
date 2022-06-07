@@ -1,0 +1,45 @@
+- DeleteVacancyReviewResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      rate:
+        type: 'number'
+      description:
+        type: 'string'
+      vacancy:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          specialist:
+            type: 'object'
+            properties:
+              id:
+                type: 'string'
+                format: 'uuid'
+              firstName:
+                type: 'string'
+              lastName:
+                type: 'string'
+              photoLink:
+                type: 'string'
+      customer:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          firstName:
+            type: 'string'
+          lastName:
+            type: 'string'
+      category:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          title:
+            type: 'string'

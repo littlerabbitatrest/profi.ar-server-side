@@ -1,19 +1,24 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IGetSpecialistResponseDataItem {
+export interface IGetSpecialistItemResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   firstName: string;
   lastName: string;
   photoLink: string;
   email: string;
   phone: string;
-  password: string;
+  vacancies: {
+    id: string;
+    category: {
+      id: string;
+      title: string;
+    };
+  }[];
+  location: {
+    id: string;
+    city: string;
+    state: {
+      name: string;
+    }
+  };
 }
 
-export type IGetSpecialistsResponseData = IGetSpecialistResponseDataItem[];
-
-export interface IGetSpecialistsResponse extends IBaseResponse {
-  data: IGetSpecialistsResponseData;
-}
+export type IGetSpecialistsResponse = IGetSpecialistItemResponse[];

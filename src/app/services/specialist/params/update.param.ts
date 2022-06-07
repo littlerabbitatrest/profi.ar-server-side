@@ -1,13 +1,10 @@
-import { ILocation } from '@app/interfaces';
-
 export interface IUpdateSpecialist {
   firstName: string;
   lastName: string;
   photoLink: string;
   email: string;
   phone: string;
-  password: string;
 
-  /* Отношения*/
-  location: ILocation;
+  /* Ключи*/
+  locationId: string;
 }

@@ -1,0 +1,4 @@
+- CreateStateDto:
+    properties:
+      name:
+        type: 'string'

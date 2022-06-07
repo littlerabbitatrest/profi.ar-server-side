@@ -1,13 +1,24 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IDeleteVacancyReviewResponseData {
+export interface IDeleteVacancyReviewResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   rate: number;
   description: string;
+  vacancy: {
+    id: string;
+    specialist: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      photoLink: string;
+    };
+    category: {
+      id: string;
+      title: string;
+    };
+  };
+  customer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  };
 }
 
-export interface IDeleteVacancyReviewResponse extends IBaseResponse{
-data: IDeleteVacancyReviewResponseData;
-}

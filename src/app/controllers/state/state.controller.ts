@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, UseGuards } from '@nestjs/common';
 
 import { StateService } from '@app/services/state';
 import {
@@ -9,8 +8,11 @@ import {
   IGetStateResponse,
   UpdateStateDto
 } from '@app/controllers/state';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('states')
+@UseGuards(JWTGuard)
 export class StateController {
   constructor(private readonly stateService: StateService) {}
 
@@ -18,11 +20,7 @@ export class StateController {
   async getAllStates(): Promise<IGetStatesResponse> {
     const states = await this.stateService.getAllStates();
 
-    if (states) {
-      return CreateResponse(states, true);
-    }
-
-    return CreateResponse(null, false, 'Штаты не были найдены');
+    return states;
   }
 
   @Get(':id')
@@ -31,50 +29,40 @@ export class StateController {
   ): Promise<IGetStateResponse> {
     const state = await this.stateService.getState({ id });
 
-    if (state) {
-      return CreateResponse(state, true);
-    }
-
-    return CreateResponse(null, false, 'Штат не был найден');
+    return state;
   }
 
   @Post()
+  @UseGuards(RoleGuard)
+  @Roles('admin')
   async createState(
     @Body() createStateDto: CreateStateDto
   ): Promise<IGetStateResponse> {
     const state = await this.stateService.createState(createStateDto);
 
-    if (state) {
-      return CreateResponse(state, true);
-    }
-
-    return CreateResponse(null, false, 'Штат не был создан');
+    return state;
   }
 
   @Put(':id')
+  @UseGuards(RoleGuard)
+  @Roles('admin')
   async updateState(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateStateDto: UpdateStateDto
   ): Promise<IGetStateResponse> {
     const state = await this.stateService.updateState({ id }, updateStateDto);
 
-    if (state) {
-      return CreateResponse(state, true);
-    }
-
-    return CreateResponse(null, false, 'Штат не был обновлен');
+    return state;
   }
 
   @Delete(':id')
-  async removeState(
+  @UseGuards(RoleGuard)
+  @Roles('admin')
+  async deleteState(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteStateResponse> {
     const state = await this.stateService.deleteState({ id });
 
-    if (state) {
-      return CreateResponse(state, true);
-    }
-
-    return CreateResponse(null, false, 'Штат не был удален');
+    return state;
   }
 }

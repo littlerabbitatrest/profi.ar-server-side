@@ -1,17 +1,32 @@
-import { IBaseResponse } from '@nonameteam/core';
-
 import { Statuses } from '@app/interfaces';
 
-export interface IDeleteOrderResponseData {
+export interface IDeleteOrderResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   title: string;
   description: string;
   price: number;
-  status: Statuses;
-}
-
-export interface IDeleteOrderResponse extends IBaseResponse {
-  data: IDeleteOrderResponseData;
+  status: Statuses,
+  customer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photoLink: string;
+  };
+  vacancy: {
+    id: string;
+    specialist: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      photoLink: string;
+    }
+  }
+  scope: {
+    id: string;
+    name: string;
+  }
+  category: {
+    id: string;
+    title: string;
+  }
 }

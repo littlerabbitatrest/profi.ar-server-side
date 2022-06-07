@@ -1,17 +1,11 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-import { IState } from '@app/interfaces';
-
-export interface IGetLocationResponseDataItem {
+export interface IGetLocationItemResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   city: string;
-  state: IState;
+  state: {
+    id: string;
+    name: string;
+  };
 }
 
-export type IGetLocationsResponseData = IGetLocationResponseDataItem[];
+export type IGetLocationsResponse = IGetLocationItemResponse[];
 
-export interface IGetLocationsResponse extends IBaseResponse {
-  data: IGetLocationsResponseData;
-}

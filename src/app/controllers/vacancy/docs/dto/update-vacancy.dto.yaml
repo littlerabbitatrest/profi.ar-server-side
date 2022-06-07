@@ -1,0 +1,6 @@
+- UpdateVacancyDto:
+    properties:
+      education:
+        type: 'string'
+      experience:
+        type: 'string'

@@ -1,19 +1,35 @@
-import { IBaseResponse } from '@nonameteam/core';
-
 import { Statuses } from '@app/interfaces';
 
-export interface IGetOrderResponseDataItem {
+export interface IGetOrderItemResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   title: string;
   description: string;
   price: number;
-  status: Statuses;
+  status: Statuses,
+  customer: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photoLink: string;
+  };
+  vacancy: {
+    id: string;
+    specialist: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      photoLink: string;
+    }
+  }
+  scope: {
+    id: string;
+    name: string;
+  }
+  category: {
+    id: string;
+    title: string;
+  }
 }
 
-export type IGetOrdersResponseData = IGetOrderResponseDataItem[];
+export type IGetOrdersResponse = IGetOrderItemResponse[];
 
-export interface IGetOrdersResponse extends IBaseResponse {
-  data: IGetOrdersResponseData;
-}

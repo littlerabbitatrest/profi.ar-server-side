@@ -1,15 +1,8 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-import { IState } from '@app/interfaces';
-
-export interface IDeleteLocationResponseData {
+export interface IDeleteLocationResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   city: string;
-  state: IState;
-}
-
-export interface IDeleteLocationResponse extends IBaseResponse {
-  data: IDeleteLocationResponseData;
+  state: {
+    id: string;
+    name: string;
+  };
 }

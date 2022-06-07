@@ -1,4 +1,4 @@
-import { Statuses, IVacancy } from '@app/interfaces';
+import { Statuses } from '@app/interfaces';
 
 export interface IUpdateOrder {
   title: string;
@@ -7,5 +7,5 @@ export interface IUpdateOrder {
   status: Statuses;
 
   /* Отношения*/
-  vacancy: IVacancy;
+  vacancyId: string;
 }

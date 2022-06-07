@@ -1,0 +1,96 @@
+- /specialists:
+    get:
+      tags:
+        - 'Специалисты'
+      summary: 'Получение всех специалистах с опциональным параметром локации'
+      operationId: 'getAllSpecialists'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'query'
+          name: 'locationId'
+          required: false
+          description: 'id локации'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о специалистах успешно получена'
+          schema:
+            type: 'array'
+            items:
+              $ref: '#/definitions/GetSpecialistsResponse'
+
+- /specialists/{id}:
+    get:
+      tags:
+        - 'Специалисты'
+      summary: 'Получение специалиста по id'
+      operationId: 'getSpecialist'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор специалиста'
+          schema:
+            type: 'string'
+            format: 'uuid'
+      responses:
+        '200':
+          description: 'Информация о специалисте успешно получена'
+          schema:
+            $ref: '#/definitions/GetSpecialistResponse'
+    put:
+      tags:
+        - 'Специалисты'
+      summary: 'Обновление специалиста'
+      operationId: 'updateSpecialist'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор специалиста'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'body'
+          name: 'dto'
+          required: true
+          description: 'Информация о специалисте'
+          schema:
+            $ref: '#/definitions/UpdateSpecialistDto'
+      responses:
+        '200':
+          description: 'Специалист успешно обновлен'
+          schema:
+            $ref: '#/definitions/GetSpecialistResponse'
+    delete:
+      tags:
+        - 'Специалисты'
+      summary: 'Удаление специалиста'
+      operationId: 'deleteSpecialist'
+      consumes:
+        - 'application/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          description: 'Идентификатор специалиста'
+      responses:
+        '200':
+          description: 'Специалист успешно удален'
+          schema:
+            $ref: '#/definitions/DeleteSpecialistResponse'

@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 
 import { VacancyService } from '@app/services/vacancy';
 import {
@@ -9,20 +8,23 @@ import {
   IGetVacancyResponse,
   UpdateVacancyDto
 } from '@app/controllers/vacancy';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('vacancies')
+@UseGuards(JWTGuard)
 export class VacancyController {
   constructor(private readonly vacancyService: VacancyService) {}
 
   @Get()
-  async getAllVacancies(): Promise<IGetVacanciesResponse> {
-    const vacancies = await this.vacancyService.getAllVacancies();
+  async getAllVacancies(
+    @Query('specialistId') specialistId?: string,
+    @Query('scopeId') scopeId?: string,
+    @Query('categoryId') categoryId?: string,
+  ): Promise<IGetVacanciesResponse> {
+    const vacancies = await this.vacancyService.getAllVacancies({ specialistId, scopeId, categoryId });
 
-    if (vacancies) {
-      return CreateResponse(vacancies, true);
-    }
-
-    return CreateResponse(null, false, 'Вакансии не были найдены');
+    return vacancies;
   }
 
   @Get(':id')
@@ -31,50 +33,40 @@ export class VacancyController {
   ): Promise<IGetVacancyResponse> {
     const vacancy = await this.vacancyService.getVacancy({ id });
 
-    if (vacancy) {
-      return CreateResponse(vacancy, true);
-    }
-
-    return CreateResponse(null, false, 'Вакансия не была найдена');
+    return vacancy;
   }
 
   @Post()
+  @UseGuards(RoleGuard)
+  @Roles('specialist')
   async createVacancy(
     @Body() createVacancyDto: CreateVacancyDto
   ): Promise<IGetVacancyResponse> {
     const vacancy = await this.vacancyService.createVacancy(createVacancyDto);
 
-    if (vacancy) {
-      return CreateResponse(vacancy, true);
-    }
-
-    return CreateResponse(null, false, 'Вакансия не была создана');
+    return vacancy;
   }
 
   @Put(':id')
+  @UseGuards(RoleGuard)
+  @Roles('specialist')
   async updateVacancy(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateVacancyDto: UpdateVacancyDto
   ): Promise<IGetVacancyResponse> {
     const vacancy = await this.vacancyService.updateVacancy({ id }, updateVacancyDto);
 
-    if (vacancy) {
-      return CreateResponse(vacancy, true);
-    }
-
-    return CreateResponse(null, false, 'Вакансия не была обновлена');
+    return vacancy;
   }
 
   @Delete(':id')
-  async removeVacancy(
+  @UseGuards(RoleGuard)
+  @Roles('specialist')
+  async deleteVacancy(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteVacancyResponse> {
     const vacancy = await this.vacancyService.deleteVacancy({ id });
 
-    if (vacancy) {
-      return CreateResponse(vacancy, true);
-    }
-
-    return CreateResponse(null, false, 'Вакансия не была удалена');
+    return vacancy;
   }
 }

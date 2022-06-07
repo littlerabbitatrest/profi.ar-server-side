@@ -1,0 +1,4 @@
+- LoginResponse:
+    properties:
+      token:
+        type: 'string'

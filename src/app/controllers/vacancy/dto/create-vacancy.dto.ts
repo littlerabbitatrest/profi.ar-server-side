@@ -1,6 +1,4 @@
-import { IsString, Length } from 'class-validator';
-
-import { ICategory, IScope, ISpecialist } from '@app/interfaces';
+import { IsString, IsUUID, Length } from 'class-validator';
 
 export class CreateVacancyDto {
   @IsString()
@@ -11,7 +9,13 @@ export class CreateVacancyDto {
   @Length(1, 100)
     experience: string;
 
-  scope: IScope;
-  category: ICategory;
-  specialist: ISpecialist;
+  /* Ключи*/
+  @IsUUID()
+    scopeId: string;
+
+  @IsUUID()
+    categoryId: string;
+
+  @IsUUID()
+    specialistId: string;
 }

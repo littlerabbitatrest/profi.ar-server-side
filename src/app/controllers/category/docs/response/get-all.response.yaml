@@ -1,0 +1,15 @@
+- GetCategoriesResponse:
+    properties:
+      id:
+        type: 'string'
+        format: 'uuid'
+      title:
+        type: 'string'
+      scope:
+        type: 'object'
+        properties:
+          id:
+            type: 'string'
+            format: 'uuid'
+          name:
+            type: 'string'

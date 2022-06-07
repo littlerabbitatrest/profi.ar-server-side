@@ -1,5 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
+
 import { CategoryModule } from '@app/modules/category';
 import { CustomerModule } from '@app/modules/customer';
 import { CustomerReviewModule } from '@app/modules/customer-review';
@@ -10,6 +11,7 @@ import { SpecialistModule } from '@app/modules/specialist';
 import { StateModule } from '@app/modules/state';
 import { VacancyModule } from '@app/modules/vacancy';
 import { VacancyReviewModule } from '@app/modules/vacancy-review';
+import { AuthModule } from '@app/modules/auth';
 
 @Module({
   imports: [
@@ -23,8 +25,8 @@ import { VacancyReviewModule } from '@app/modules/vacancy-review';
     SpecialistModule,
     StateModule,
     VacancyModule,
-    VacancyReviewModule
-
+    VacancyReviewModule,
+    AuthModule
   ]
 })
 export class AppModule {}

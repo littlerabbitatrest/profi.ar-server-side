@@ -1,7 +1,6 @@
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsEmail, IsEnum, IsString, IsUUID, Length } from 'class-validator';
 
-
-import { ILocation } from '@app/interfaces';
+import { Roles } from '@app/interfaces';
 
 export class UpdateCustomerDto {
   @IsString()
@@ -23,10 +22,10 @@ export class UpdateCustomerDto {
   @Length(2, 50)
     phone: string;
 
-  @IsString()
-  @Length(8, 20)
-    password: string;
+  @IsEnum(Roles)
+    role: Roles;
 
-  /* Отношения*/
-  location: ILocation;
+  /* Ключи*/
+  @IsUUID()
+    locationId: string;
 }

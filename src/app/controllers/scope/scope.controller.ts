@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, UseGuards } from '@nestjs/common';
 
 import { ScopeService } from '@app/services/scope';
 import {
@@ -9,8 +8,11 @@ import {
   IGetScopeResponse,
   UpdateScopeDto
 } from '@app/controllers/scope';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('scopes')
+@UseGuards(JWTGuard)
 export class ScopeController {
   constructor(private readonly scopeService: ScopeService) {}
 
@@ -18,11 +20,7 @@ export class ScopeController {
   async getAllScopes(): Promise<IGetScopesResponse> {
     const scopes = await this.scopeService.getAllScopes();
 
-    if (scopes) {
-      return CreateResponse(scopes, true);
-    }
-
-    return CreateResponse(null, false, 'Сферы деятельности не были найдены');
+    return scopes;
   }
 
   @Get(':id')
@@ -31,50 +29,40 @@ export class ScopeController {
   ): Promise<IGetScopeResponse> {
     const scope = await this.scopeService.getScope({ id });
 
-    if (scope) {
-      return CreateResponse(scope, true);
-    }
-
-    return CreateResponse(null, false, 'Сфера деятельности не была найдена');
+    return scope;
   }
 
   @Post()
+  @UseGuards(RoleGuard)
+  @Roles('admin')
   async createScope(
     @Body() createScopeDto: CreateScopeDto
   ): Promise<IGetScopeResponse> {
     const scope = await this.scopeService.createScope(createScopeDto);
 
-    if (scope) {
-      return CreateResponse(scope, true);
-    }
-
-    return CreateResponse(null, false, 'Сфера деятельности не была создана');
+    return scope;
   }
 
   @Put(':id')
+  @UseGuards(RoleGuard)
+  @Roles('admin')
   async updateScope(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateScopeDto: UpdateScopeDto
   ): Promise<IGetScopeResponse> {
     const scope = await this.scopeService.updateScope({ id }, updateScopeDto);
 
-    if (scope) {
-      return CreateResponse(scope, true);
-    }
-
-    return CreateResponse(null, false, 'Сфера деятельности не была обновлена');
+    return scope;
   }
 
   @Delete(':id')
-  async removeScope(
+  @UseGuards(RoleGuard)
+  @Roles('admin')
+  async deleteScope(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteScopeResponse> {
     const scope = await this.scopeService.deleteScope({ id });
 
-    if (scope) {
-      return CreateResponse(scope, true);
-    }
-
-    return CreateResponse(null, false, 'Сфера деятельности не была удалена');
+    return scope;
   }
 }

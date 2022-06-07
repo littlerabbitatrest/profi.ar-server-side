@@ -1,29 +1,27 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
-import { CreateResponse } from '@nonameteam/core';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Put, Query, UseGuards } from '@nestjs/common';
 
 import { CustomerService } from '@app/services/customer';
 import {
-  CreateCustomerDto,
   IDeleteCustomerResponse,
   IGetCustomersResponse,
   IGetCustomerResponse,
-  UpdateCustomerDto,
-  AuthorizationCustomerDto
+  UpdateCustomerDto
 } from '@app/controllers/customer';
+import { JWTGuard, RoleGuard } from '@app/guards';
+import { Roles } from '@app/decorators';
 
 @Controller('customers')
+@UseGuards(JWTGuard)
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Get()
-  async getAllCustomers(): Promise<IGetCustomersResponse> {
-    const customers = await this.customerService.getAllCustomers();
+  async getAllCustomers(
+    @Query('locationId') locationId?: string
+  ): Promise<IGetCustomersResponse> {
+    const customers = await this.customerService.getAllCustomers({ locationId });
 
-    if (customers) {
-      return CreateResponse(customers, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчики не были найдены');
+    return customers;
   }
 
   @Get(':id')
@@ -32,63 +30,29 @@ export class CustomerController {
   ): Promise<IGetCustomerResponse> {
     const customer = await this.customerService.getCustomer({ id });
 
-    if (customer) {
-      return CreateResponse(customer, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчик не был найден');
-  }
-
-  @Get('authorization')
-  async authorizationCustomer(
-    @Body() authorizationCustomerDto: AuthorizationCustomerDto
-  ): Promise<IGetCustomerResponse> {
-    const customer = await this.customerService.authorizationCustomer({ ...authorizationCustomerDto });
-
-    if (customer) {
-      return CreateResponse(customer, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчик не был найден');
-  }
-
-  @Post()
-  async createCustomer(
-    @Body() createCustomerDto: CreateCustomerDto
-  ): Promise<IGetCustomerResponse> {
-    const customer = await this.customerService.createCustomer(createCustomerDto);
-
-    if (customer) {
-      return CreateResponse(customer, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчик не был создан');
+    return customer;
   }
 
   @Put(':id')
+  @UseGuards(RoleGuard)
+  @Roles('common')
   async updateCustomer(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateCustomerDto: UpdateCustomerDto
   ): Promise<IGetCustomerResponse> {
     const customer = await this.customerService.updateCustomer({ id }, updateCustomerDto);
 
-    if (customer) {
-      return CreateResponse(customer, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчик не был обновлен');
+    return customer;
   }
 
   @Delete(':id')
-  async removeCustomer(
+  @UseGuards(RoleGuard)
+  @Roles('common')
+  async deleteCustomer(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string
   ): Promise<IDeleteCustomerResponse> {
     const customer = await this.customerService.deleteCustomer({ id });
 
-    if (customer) {
-      return CreateResponse(customer, true);
-    }
-
-    return CreateResponse(null, false, 'Заказчик не был удален');
+    return customer;
   }
 }

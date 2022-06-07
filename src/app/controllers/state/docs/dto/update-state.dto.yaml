@@ -1,0 +1,4 @@
+- UpdateStateDto:
+    properties:
+      name:
+        type: 'string'

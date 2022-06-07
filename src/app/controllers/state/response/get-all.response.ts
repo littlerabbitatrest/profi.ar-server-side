@@ -1,14 +1,6 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IGetStateResponseDataItem {
+export interface IGetStateItemResponse {
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   name: string;
 }
 
-export type IGetStatesResponseData = IGetStateResponseDataItem[];
-
-export interface IGetStatesResponse extends IBaseResponse {
-  data: IGetStatesResponseData;
-}
+export type IGetStatesResponse = IGetStateItemResponse[];

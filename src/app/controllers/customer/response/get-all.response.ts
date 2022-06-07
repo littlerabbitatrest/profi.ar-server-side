@@ -1,23 +1,22 @@
-import { IBaseResponse } from '@nonameteam/core';
-
 import { Roles } from '@app/interfaces';
 
-export interface IGetCustomerResponseDataItem{
+export interface IGetCustomerItemResponse{
   id: string;
-  createdAt: Date;
-  updatedAt: Date;
   firstName: string;
   lastName: string;
   photoLink: string;
   email: string;
   phone: string;
-  password: string;
   commonRate: number;
   role: Roles;
+  location: {
+    id: string;
+    city: string;
+    state: {
+      name: string;
+    }
+  }
 }
 
-export type IGetCustomersResponseData = IGetCustomerResponseDataItem[];
+export type IGetCustomersResponse = IGetCustomerItemResponse[];
 
-export interface IGetCustomersResponse extends IBaseResponse {
-  data: IGetCustomersResponseData;
-}

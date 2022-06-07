@@ -1,6 +1,6 @@
-import { IsEnum, IsNumber, IsString, Length, Max, Min } from 'class-validator';
+import { IsEnum, IsNumber, IsString, IsUUID, Length, Max, Min } from 'class-validator';
 
-import { IVacancy, Statuses } from '@app/interfaces';
+import { Statuses } from '@app/interfaces';
 
 export class UpdateOrderDto {
   @IsString()
@@ -19,5 +19,7 @@ export class UpdateOrderDto {
   @IsEnum(Statuses)
     status: Statuses;
 
-  vacancy: IVacancy;
+  /* Ключи*/
+  @IsUUID()
+    vacancyId: string;
 }

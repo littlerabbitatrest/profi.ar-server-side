@@ -1,62 +1,85 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Transaction, TransactionRepository } from 'typeorm';
 
-import {
-  IAuthorizationSpecialist,
-  ICreateSpecialist,
-  IGetSpecialistById,
-  IUpdateSpecialist
-} from '@app/services/specialist';
-import { SpecialistRepository } from '@app/repositories/specialist';
+import { IGetAllSpecialistParam, ISpecialistResponse, SpecialistRepository } from '@app/repositories/specialist';
+import { LocationRepository } from '@app/repositories/location';
+import { ICreateSpecialist, IGetSpecialistById, IUpdateSpecialist, ILoginSpecialist, IUpdateToken } from '@app/services/specialist';
+import { LocationService } from '@app/services/location';
 import { ISpecialist } from '@app/interfaces';
 
 @Injectable()
 export class SpecialistService {
+  constructor(private readonly locationService: LocationService) {}
+
   @Transaction()
   createSpecialist(
-    specialist: ICreateSpecialist,
-    @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist> {
-    return specialistRep.save(specialist);
+    newSpecialist: ICreateSpecialist,
+    @TransactionRepository() specialistRep?: SpecialistRepository,
+    @TransactionRepository() locationRep?: LocationRepository,
+  ): Promise<ISpecialistResponse> {
+    const location = this.locationService.getLocation({ id: newSpecialist.locationId }, locationRep);
+
+    if (!location) {
+      throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
+    }
+
+    return specialistRep.save(newSpecialist);
   }
 
   @Transaction()
   getAllSpecialists(
+    { locationId }: IGetAllSpecialistParam,
     @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist[]> {
-    return specialistRep.getAll();
+  ): Promise<ISpecialistResponse[]> {
+    return specialistRep.getAll({ locationId });
   }
+
+  @Transaction()
+  getByPhoneOrEmail(
+    { login }: ILoginSpecialist,
+    @TransactionRepository() specialistRep?: SpecialistRepository
+  ): Promise<ISpecialist> {
+    return specialistRep.getByPhoneOrEmail({ login });
+  }
+
 
   @Transaction()
   getSpecialist(
     { id }: IGetSpecialistById,
     @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist> {
+  ): Promise<ISpecialistResponse> {
     return specialistRep.getById({ id });
-  }
-
-  @Transaction()
-  authorizationSpecialist(
-    { login, password }: IAuthorizationSpecialist,
-    @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist> {
-    return specialistRep.authorization({ login, password });
   }
 
   @Transaction()
   updateSpecialist(
     { id }: IGetSpecialistById,
     specialist: IUpdateSpecialist,
+    @TransactionRepository() specialistRep?: SpecialistRepository,
+    @TransactionRepository() locationRep?: LocationRepository,
+  ): Promise<ISpecialistResponse> {
+    const location = this.locationService.getLocation({ id: specialist.locationId }, locationRep);
+
+    if (!location) {
+      throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
+    }
+
+    return specialistRep.save({ ...specialist, id });
+  }
+
+  @Transaction()
+  updateToken(
+    { id, token }: IUpdateToken,
     @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist> {
-    return specialistRep.save({ id, ...specialist });
+  ): void {
+    specialistRep.updateToken({ id, token });
   }
 
   @Transaction()
   deleteSpecialist(
     { id }: IGetSpecialistById,
     @TransactionRepository() specialistRep?: SpecialistRepository
-  ): Promise<ISpecialist> {
+  ): Promise<ISpecialistResponse> {
     return specialistRep.softRemove({ id });
   }
 }

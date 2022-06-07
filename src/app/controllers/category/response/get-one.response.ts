@@ -1,12 +1,8 @@
-import { IBaseResponse } from '@nonameteam/core';
-
-export interface IGetCategoryResponseData {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  name: string;
-}
-
-export interface IGetCategoryResponse extends IBaseResponse {
-  data: IGetCategoryResponseData;
+export interface IGetCategoryResponse {
+  id: string,
+  title: string;
+  scope: {
+    id: string,
+    name: string
+  };
 }
