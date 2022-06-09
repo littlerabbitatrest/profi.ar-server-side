@@ -10,7 +10,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/src/app/modules/main/main"
+    "start:prod": "node dist/app/modules/main/main"
   },
   "dependencies": {
     "@nestjs/common": "^8.2.3",
