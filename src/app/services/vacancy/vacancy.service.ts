@@ -47,10 +47,10 @@ export class VacancyService {
 
   @Transaction()
   getAllVacancies(
-    { specialistId, categoryId, scopeId }: IGetAllVacancyParam,
+    { specialistId, categoryId, scopeId, locationId }: IGetAllVacancyParam,
     @TransactionRepository() vacancyRep?: VacancyRepository
   ): Promise<IVacancyResponse[]> {
-    return vacancyRep.getAll({ specialistId, categoryId, scopeId });
+    return vacancyRep.getAll({ specialistId, categoryId, scopeId, locationId });
   }
 
   @Transaction()

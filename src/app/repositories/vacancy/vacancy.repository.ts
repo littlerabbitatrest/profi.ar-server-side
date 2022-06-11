@@ -19,24 +19,24 @@ export class VacancyRepository extends Repository<Vacancy> {
   }
 
   getAll(
-    { scopeId, specialistId, categoryId }: IGetAllVacancyParam
+    { scopeId, specialistId, categoryId, locationId }: IGetAllVacancyParam
   ): Promise<IVacancyResponse[]> {
     const query = this.createQueryBuilder('vacancy')
       .innerJoin('vacancy.specialist', 'specialist')
       .innerJoin('vacancy.scope', 'scope')
-      .innerJoin('vacancy.category', 'category')
-      .where('1=1');
+      .innerJoin('vacancy.category', 'category');
 
-    if (scopeId) {
-      query.andWhere('vacancy.scope = :scopeId', { scopeId });
-    }
-
-    if (categoryId) {
-      query.andWhere('vacancy.category = :categoryId', { categoryId });
-    }
-
-    if (specialistId) {
-      query.andWhere('vacancy.specialist = :specialistId', { specialistId });
+    switch (true) {
+      case Boolean(scopeId):
+        query.andWhere('vacancy.scope = :scopeId', { scopeId });
+      case Boolean(categoryId):
+        query.andWhere('vacancy.category = :categoryId', { categoryId });
+      case Boolean(specialistId):
+        query.andWhere('vacancy.specialist = :specialistId', { specialistId });
+      case Boolean(locationId):
+        query.andWhere('specialist.location = :locationId', { locationId });
+      default:
+        break;
     }
 
     query.select(['vacancy', 'specialist.id', 'specialist.firstName', 'specialist.lastName', 'specialist.photoLink',

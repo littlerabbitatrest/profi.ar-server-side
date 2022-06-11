@@ -9,12 +9,14 @@ import { ILoginParam, IRegistration } from '@app/services/auth';
 import { CustomerRepository } from '@app/repositories/customer';
 import { SpecialistRepository } from '@app/repositories/specialist';
 import { Roles } from '@app/interfaces';
+import { LocationService } from '@app/services/location';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly customerService: CustomerService,
-    private readonly specialistService: SpecialistService
+    private readonly specialistService: SpecialistService,
+    private readonly locationService: LocationService,
   ) {}
 
   @Transaction()
@@ -80,6 +82,11 @@ export class AuthService {
       throw new HttpException('Пользователь с такой почтой уже зарегистрирован', HttpStatus.BAD_REQUEST);
     }
 
+    const location = await this.locationService.getLocation({ id: dto.locationId });
+    if (!location) {
+      throw new HttpException('Локация не найдена', HttpStatus.BAD_REQUEST);
+    }
+
     const customer = await this.customerService.createCustomer({ ...dto, password: this.hash(dto.password) });
 
     const token = generateJwtToken({ id: customer.id, role: Roles[customer.role] });
@@ -102,6 +109,11 @@ export class AuthService {
     const existEmail = await this.specialistService.getByPhoneOrEmail({ login: dto.email }, specialistRep);
     if (existEmail) {
       throw new HttpException('Пользователь с такой почтой уже зарегистрирован', HttpStatus.BAD_REQUEST);
+    }
+
+    const location = await this.locationService.getLocation({ id: dto.locationId });
+    if (!location) {
+      throw new HttpException('Локация не найдена', HttpStatus.BAD_REQUEST);
     }
 
     const specialist = await this.specialistService.createSpecialist({ ...dto, password: this.hash(dto.password) });

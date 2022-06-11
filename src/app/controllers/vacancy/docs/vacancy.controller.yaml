@@ -33,17 +33,27 @@
         - in: 'query'
           name: 'specialistId'
           required: false
+          description: 'Идентификатор специалиста'
           schema:
             type: 'string'
             format: 'uuid'
         - in: 'query'
           name: 'scopeId'
           required: false
+          description: 'Идентификатор сферы деятельности'
           schema:
             type: 'string'
             format: 'uuid'
         - in: 'query'
           name: 'categoryId'
+          description: 'Идентификатор категории'
+          required: false
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'locationId'
+          description: 'Идентификатор местоположения'
           required: false
           schema:
             type: 'string'

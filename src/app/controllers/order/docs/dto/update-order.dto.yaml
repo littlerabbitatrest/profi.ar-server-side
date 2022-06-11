@@ -8,12 +8,7 @@
         type: 'number'
       status:
         type: 'string'
-        enum:
-          - rejected
-          - open
-          - accepted
-          - completed
-          - canceled
+        enum: ['rejected', 'open', 'accepted', 'completed', 'canceled']
       vacancyId:
         type: 'string'
         format: 'uuid'

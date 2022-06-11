@@ -12,7 +12,6 @@ import { JWTGuard, RoleGuard } from '@app/guards';
 import { Roles } from '@app/decorators';
 
 @Controller('states')
-@UseGuards(JWTGuard)
 export class StateController {
   constructor(private readonly stateService: StateService) {}
 
@@ -33,7 +32,7 @@ export class StateController {
   }
 
   @Post()
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async createState(
     @Body() createStateDto: CreateStateDto
@@ -44,7 +43,7 @@ export class StateController {
   }
 
   @Put(':id')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async updateState(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -56,7 +55,7 @@ export class StateController {
   }
 
   @Delete(':id')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async deleteState(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string

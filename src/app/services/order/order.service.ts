@@ -51,10 +51,10 @@ export class OrderService {
 
   @Transaction()
   getAllOrders(
-    { categoryId, scopeId, vacancyId, customerId }: IGetAllOrdersParam,
+    { categoryId, scopeId, vacancyId, customerId, locationId, statuses }: IGetAllOrdersParam,
     @TransactionRepository() orderRep?: OrderRepository
   ): Promise<IOrderResponse[]> {
-    return orderRep.getAll({ categoryId, scopeId, vacancyId, customerId });
+    return orderRep.getAll({ categoryId, scopeId, vacancyId, customerId, locationId, statuses });
   }
 
   @Transaction()

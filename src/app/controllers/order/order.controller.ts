@@ -22,8 +22,10 @@ export class OrderController {
     @Query('vacancyId') vacancyId?: string,
     @Query('scopeId') scopeId?: string,
     @Query('categoryId') categoryId?: string,
+    @Query('locationId') locationId?: string,
+    @Query('statuses') statuses?: string[],
   ): Promise<IGetOrdersResponse> {
-    const orders = await this.orderService.getAllOrders({ customerId, scopeId, categoryId, vacancyId });
+    const orders = await this.orderService.getAllOrders({ customerId, scopeId, categoryId, vacancyId, locationId, statuses });
 
     return orders;
   }

@@ -12,7 +12,6 @@ import { JWTGuard, RoleGuard } from '@app/guards';
 import { Roles } from '@app/decorators';
 
 @Controller('locations')
-@UseGuards(JWTGuard)
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
@@ -35,7 +34,7 @@ export class LocationController {
   }
 
   @Post()
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async createLocation(
     @Body() createLocationDto: CreateLocationDto
@@ -46,7 +45,7 @@ export class LocationController {
   }
 
   @Put(':id')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async updateLocation(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -58,7 +57,7 @@ export class LocationController {
   }
 
   @Delete(':id')
-  @UseGuards(RoleGuard)
+  @UseGuards(RoleGuard, JWTGuard)
   @Roles('admin')
   async deleteLocation(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string

@@ -21,8 +21,9 @@ export class VacancyController {
     @Query('specialistId') specialistId?: string,
     @Query('scopeId') scopeId?: string,
     @Query('categoryId') categoryId?: string,
+    @Query('locationId') locationId?: string,
   ): Promise<IGetVacanciesResponse> {
-    const vacancies = await this.vacancyService.getAllVacancies({ specialistId, scopeId, categoryId });
+    const vacancies = await this.vacancyService.getAllVacancies({ specialistId, scopeId, categoryId, locationId });
 
     return vacancies;
   }

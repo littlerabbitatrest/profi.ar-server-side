@@ -12,20 +12,16 @@ export class RegistrationDto {
   @Length(1, 50)
     lastName: string;
 
-  @ApiProperty()
   @IsEmail()
     email: string;
 
-  @ApiProperty()
   @IsMobilePhone()
     phone: string;
 
-  @ApiProperty()
   @IsString()
   @Length(6, 20)
     password: string;
 
-  @ApiProperty()
   @IsUUID()
     locationId: string;
 }

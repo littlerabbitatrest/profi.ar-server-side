@@ -3,4 +3,6 @@ export interface IGetAllOrdersParam {
   vacancyId?: string;
   scopeId?: string;
   categoryId?: string;
+  locationId?: string;
+  statuses?: string[];
 }

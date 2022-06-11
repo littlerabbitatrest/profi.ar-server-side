@@ -11,13 +11,7 @@
         type: 'number'
       status:
         type: 'string'
-        enum:
-          - moderation
-          - rejected
-          - open
-          - accepted
-          - completed
-          - canceled
+        enum: [ 'moderation', 'rejected', 'open', 'accepted', 'completed', 'canceled' ]
       customer:
         type: 'object'
         properties:

@@ -22,7 +22,7 @@ export class OrderRepository extends Repository<Order> {
     return query.getOne();
   }
 
-  getAll({ customerId, scopeId, vacancyId, categoryId }: IGetAllOrdersParam): Promise<IOrderResponse[]> {
+  getAll({ customerId, scopeId, vacancyId, categoryId, locationId, statuses }: IGetAllOrdersParam): Promise<IOrderResponse[]> {
     const query = this.createQueryBuilder('order')
       .innerJoin('order.customer', 'customer')
       .leftJoin('order.vacancy', 'vacancy')
@@ -30,20 +30,20 @@ export class OrderRepository extends Repository<Order> {
       .innerJoin('order.category', 'category')
       .innerJoin('vacancy.specialist', 'specialist');
 
-    if (scopeId) {
-      query.andWhere('order.score = :scopeId', { scopeId });
-    }
-
-    if (vacancyId) {
-      query.andWhere('order.vacancy = :vacancyId', { vacancyId });
-    }
-
-    if (customerId) {
-      query.andWhere('order.customer = :customerId', { customerId });
-    }
-
-    if (categoryId) {
-      query.andWhere('order.category = :categoryId', { categoryId });
+    switch (true) {
+      case Boolean(scopeId):
+        query.andWhere('order.score = :scopeId', { scopeId });
+      case Boolean(vacancyId):
+        query.andWhere('order.vacancy = :vacancyId', { vacancyId });
+      case Boolean(customerId):
+        query.andWhere('order.customer = :customerId', { customerId });
+      case Boolean(categoryId):
+        query.andWhere('order.category = :categoryId', { categoryId });
+      case Boolean(locationId):
+        query.andWhere('customer.location = :locationId', { locationId });
+      case statuses.length > 0: query.andWhere('order.status in (:...statuses)', { statuses });
+      default:
+        break;
     }
 
     query.select(['order', 'customer.id', 'customer.firstName', 'customer.lastName', 'customer.photoLink', 'vacancy.id',

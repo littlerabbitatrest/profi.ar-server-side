@@ -58,6 +58,22 @@
           schema:
             type: 'string'
             format: 'uuid'
+        - in: 'query'
+          name: 'locationId'
+          requires: false
+          description: 'Идентификатор местоположения'
+          schema:
+            type: 'string'
+            format: 'uuid'
+        - in: 'query'
+          name: 'statuses'
+          requires: false
+          description: 'Массив требуемых статусов (можно оставить пустым)'
+          schema:
+            type: 'array'
+            items:
+              type: 'string'
+              enum: [ 'moderation', 'rejected', 'open', 'accepted', 'completed', 'canceled' ]
       responses:
         '200':
           description: 'Заказы успешно получены'
