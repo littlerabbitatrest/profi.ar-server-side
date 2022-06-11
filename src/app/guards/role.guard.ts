@@ -14,7 +14,7 @@ export class RoleGuard implements CanActivate {
     @InjectRepository(CustomerRepository) private readonly customerRep: CustomerRepository,
     @InjectRepository(SpecialistRepository) private readonly specialistRep: SpecialistRepository,
 
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
@@ -34,8 +34,8 @@ export class RoleGuard implements CanActivate {
         user = await this.specialistRep.getById({ id: jwt.id });
         user.role = 'specialist';
       }
-      if (jwt.role.toString() === 'common' || jwt.role.toString() === 'admin') {
-        user = await this.customerRep.getById({ id: jwt.id.toString() });
+      if (jwt.role === 'common' || jwt.role === 'admin') {
+        user = await this.customerRep.getById({ id: jwt.id });
         const roles = { 0: 'common', 1: 'admin' };
         user.role = roles[user.role];
       }

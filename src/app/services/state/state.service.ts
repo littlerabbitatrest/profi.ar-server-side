@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Transaction, TransactionRepository } from 'typeorm';
 
-import { IState } from '@app/interfaces';
-import { StateRepository } from '@app/repositories/state';
+import { IStateResponse, StateRepository } from '@app/repositories/state';
 import { ICreateState, IGetStateById, IUpdateState } from '@app/services/state';
 
 @Injectable()
@@ -11,14 +10,14 @@ export class StateService {
   createState(
     state: ICreateState,
     @TransactionRepository() stateRep?: StateRepository
-  ): Promise<IState> {
+  ): Promise<IStateResponse> {
     return stateRep.save(state);
   }
 
   @Transaction()
   getAllStates(
     @TransactionRepository() stateRep?: StateRepository
-  ): Promise<IState[]> {
+  ): Promise<IStateResponse[]> {
     return stateRep.getAll();
   }
 
@@ -26,7 +25,7 @@ export class StateService {
   getState(
     { id }: IGetStateById,
     @TransactionRepository() stateRep?: StateRepository
-  ): Promise<IState> {
+  ): Promise<IStateResponse> {
     return stateRep.getById({ id });
   }
 
@@ -35,7 +34,7 @@ export class StateService {
     { id }: IGetStateById,
     state: IUpdateState,
     @TransactionRepository() stateRep?: StateRepository
-  ): Promise<IState> {
+  ): Promise<IStateResponse> {
     return stateRep.save({ id, ...state });
   }
 
@@ -43,7 +42,7 @@ export class StateService {
   deleteState(
     { id }: IGetStateById,
     @TransactionRepository() stateRep?: StateRepository
-  ): Promise<IState> {
+  ): Promise<IStateResponse> {
     return stateRep.softRemove({ id });
   }
 }

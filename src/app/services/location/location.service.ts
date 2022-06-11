@@ -11,12 +11,12 @@ export class LocationService {
   constructor(private readonly stateService: StateService) {}
 
   @Transaction()
-  createLocation(
+  async createLocation(
     location: ICreateLocation,
     @TransactionRepository() locationRep?: LocationRepository,
     @TransactionRepository() stateRep?: StateRepository,
   ): Promise<ILocationResponse> {
-    const state = this.stateService.getState({ id: location.stateId }, stateRep);
+    const state = await this.stateService.getState({ id: location.stateId }, stateRep);
 
     if (!state) {
       throw new HttpException('Провинция не найдена', HttpStatus.BAD_REQUEST);
@@ -42,13 +42,13 @@ export class LocationService {
   }
 
   @Transaction()
-  updateLocation(
+  async updateLocation(
     { id }: IGetLocationById,
     location: IUpdateLocation,
     @TransactionRepository() locationRep?: LocationRepository,
     @TransactionRepository() stateRep?: StateRepository,
   ): Promise<ILocationResponse> {
-    const state = this.stateService.getState({ id: location.stateId }, stateRep);
+    const state = await this.stateService.getState({ id: location.stateId }, stateRep);
 
     if (!state) {
       throw new HttpException('Провинция не найдена', HttpStatus.BAD_REQUEST);

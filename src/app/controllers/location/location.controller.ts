@@ -33,9 +33,9 @@ export class LocationController {
     return location;
   }
 
-  @Post()
-  @UseGuards(RoleGuard, JWTGuard)
+  @UseGuards(JWTGuard, RoleGuard)
   @Roles('admin')
+  @Post()
   async createLocation(
     @Body() createLocationDto: CreateLocationDto
   ): Promise<IGetLocationResponse> {
@@ -44,9 +44,9 @@ export class LocationController {
     return location;
   }
 
-  @Put(':id')
-  @UseGuards(RoleGuard, JWTGuard)
+  @UseGuards(JWTGuard, RoleGuard)
   @Roles('admin')
+  @Put(':id')
   async updateLocation(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateLocationDto: UpdateLocationDto
@@ -57,7 +57,7 @@ export class LocationController {
   }
 
   @Delete(':id')
-  @UseGuards(RoleGuard, JWTGuard)
+  @UseGuards(JWTGuard, RoleGuard)
   @Roles('admin')
   async deleteLocation(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string

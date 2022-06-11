@@ -43,22 +43,22 @@ export class JWTGuard implements CanActivate {
       return verify(token, process.env.JWT_ACCESS_SECRET);
     } catch (error: unknown) {
       switch (true) {
-      case error instanceof TokenExpiredError: throw new HttpException(
-        'Время жизни токена авторизации истекло',
-        HttpStatus.UNAUTHORIZED
-      );
-      case error instanceof JsonWebTokenError: throw new HttpException(
-        'Некорректное содержание заголовка авторизации',
-        HttpStatus.UNAUTHORIZED
-      );
-      case error instanceof TypeError: throw new HttpException(
-        'Пустой заголовок авторизации',
-        HttpStatus.UNAUTHORIZED
-      );
-      default: throw new HttpException(
-        'Неизвестная ошибка авторизации',
-        HttpStatus.UNAUTHORIZED
-      );
+        case error instanceof TokenExpiredError: throw new HttpException(
+          'Время жизни токена авторизации истекло',
+          HttpStatus.UNAUTHORIZED
+        );
+        case error instanceof JsonWebTokenError: throw new HttpException(
+          'Некорректное содержание заголовка авторизации',
+          HttpStatus.UNAUTHORIZED
+        );
+        case error instanceof TypeError: throw new HttpException(
+          'Пустой заголовок авторизации',
+          HttpStatus.UNAUTHORIZED
+        );
+        default: throw new HttpException(
+          'Неизвестная ошибка авторизации',
+          HttpStatus.UNAUTHORIZED
+        );
       }
     }
   }

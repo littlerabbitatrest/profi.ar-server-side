@@ -32,9 +32,9 @@ export class ScopeController {
     return scope;
   }
 
-  @Post()
   @UseGuards(RoleGuard)
   @Roles('admin')
+  @Post()
   async createScope(
     @Body() createScopeDto: CreateScopeDto
   ): Promise<IGetScopeResponse> {
