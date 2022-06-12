@@ -24,7 +24,7 @@ export class Specialist extends BaseEntity implements ISpecialist {
   @Column({ type: 'varchar', length: 200 })
     password: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar' })
     locationId: string;
 
   @ManyToOne(() => Location, location => location.specialists)

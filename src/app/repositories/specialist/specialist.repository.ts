@@ -8,10 +8,10 @@ import { ISpecialist } from '@app/interfaces';
 export class SpecialistRepository extends Repository<Specialist> {
   getById({ id }: IGetById): Promise<ISpecialistResponse> {
     const query = this.createQueryBuilder('specialist')
-      .innerJoin('specialist.location', 'location')
-      .innerJoin('location.state', 'state')
+      .leftJoin('specialist.location', 'location')
+      .leftJoin('location.state', 'state')
       .leftJoin('specialist.vacancies', 'vacancy')
-      .innerJoin('vacancy.category', 'category')
+      .leftJoin('vacancy.category', 'category')
       .where('specialist.id =:id', { id })
       .select(['specialist.id', 'specialist.firstName', 'specialist.lastName', 'specialist.photoLink', 'specialist.email',
         'specialist.phone', 'vacancy.id', 'category.id', 'category.title', 'location.id', 'location.city', 'state.name']);

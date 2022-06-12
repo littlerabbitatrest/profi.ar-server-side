@@ -9,6 +9,8 @@ export class VacancyReview extends BaseEntity implements IVacancyReview {
   @Column({ type: 'integer' })
     rate: number;
 
+  @Column()
+
   @Column({ type: 'varchar', length: 1000, nullable: true })
     description: string;
 

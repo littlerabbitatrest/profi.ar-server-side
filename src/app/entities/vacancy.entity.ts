@@ -15,6 +15,9 @@ export class Vacancy extends BaseEntity implements IVacancy {
   @Column({ type: 'integer', default: 0 })
     commonRate: number;
 
+  @Column({ type: 'varchar' })
+    specialistId: string;
+
   @ManyToOne(() => Specialist, specialist => specialist.vacancies, { onDelete: 'CASCADE' })
     specialist: Specialist;
 

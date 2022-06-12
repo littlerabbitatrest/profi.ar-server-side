@@ -9,6 +9,9 @@ export class Location extends BaseEntity implements ILocation {
   @Column({ type: 'varchar', length: 100 })
     city: string;
 
+  @Column({ type: 'varchar' })
+    stateId: string;
+
   @ManyToOne(() => State, state => state.location, { onDelete: 'CASCADE' })
     state: State;
 

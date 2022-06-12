@@ -9,6 +9,9 @@ export class Category extends BaseEntity implements ICategory {
   @Column({ type: 'varchar', length: 100 })
     title: string;
 
+  @Column({ type: 'varchar', nullable: false })
+    scopeId: string;
+
   @ManyToOne(() => Scope, scope => scope.categories, { onDelete: 'CASCADE' })
     scope: Scope;
 

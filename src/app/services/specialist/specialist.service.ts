@@ -17,7 +17,7 @@ export class SpecialistService {
     @TransactionRepository() specialistRep?: SpecialistRepository,
     @TransactionRepository() locationRep?: LocationRepository,
   ): Promise<ISpecialistResponse> {
-    const location = this.locationService.getLocation({ id: specialist.locationId }, locationRep);
+    const location = await this.locationService.getLocation({ id: specialist.locationId }, locationRep);
 
     if (!location) {
       throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
