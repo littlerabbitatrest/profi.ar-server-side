@@ -8,8 +8,7 @@ import {
   ICreateCustomer,
   IGetCustomerById,
   ILoginCustomer,
-  IUpdateCustomer,
-  IUpdateToken
+  IUpdateCustomer
 } from '@app/services/customer';
 import { LocationService } from '@app/services/location';
 
@@ -18,18 +17,20 @@ export class CustomerService {
   constructor(private readonly locationService: LocationService) {}
 
   @Transaction()
-  createCustomer(
+  async createCustomer(
     customer: ICreateCustomer,
     @TransactionRepository() customerRep?: CustomerRepository,
     @TransactionRepository() locationRep?: LocationRepository,
   ): Promise<ICustomerResponse> {
-    const location = this.locationService.getLocation({ id: customer.locationId }, locationRep);
+    const location = await this.locationService.getLocation({ id: customer.locationId }, locationRep);
 
     if (!location) {
       throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
     }
 
-    return customerRep.save(customer);
+    const { id } = await customerRep.save(customer);
+
+    return customerRep.getById({ id });
   }
 
   @Transaction()
@@ -70,14 +71,6 @@ export class CustomerService {
     }
 
     return customerRep.save({ id, ...customer });
-  }
-
-  @Transaction()
-  updateToken(
-    { id, token }: IUpdateToken,
-    @TransactionRepository() customerRep?: CustomerRepository
-  ): void {
-    customerRep.updateToken({ id, token });
   }
 
   @Transaction()

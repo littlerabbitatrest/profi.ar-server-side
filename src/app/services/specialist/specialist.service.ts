@@ -3,7 +3,7 @@ import { Transaction, TransactionRepository } from 'typeorm';
 
 import { IGetAllSpecialistParam, ISpecialistResponse, SpecialistRepository } from '@app/repositories/specialist';
 import { LocationRepository } from '@app/repositories/location';
-import { ICreateSpecialist, IGetSpecialistById, IUpdateSpecialist, ILoginSpecialist, IUpdateToken } from '@app/services/specialist';
+import { ICreateSpecialist, IGetSpecialistById, IUpdateSpecialist, ILoginSpecialist } from '@app/services/specialist';
 import { LocationService } from '@app/services/location';
 import { ISpecialist } from '@app/interfaces';
 
@@ -12,18 +12,20 @@ export class SpecialistService {
   constructor(private readonly locationService: LocationService) {}
 
   @Transaction()
-  createSpecialist(
-    newSpecialist: ICreateSpecialist,
+  async createSpecialist(
+    specialist: ICreateSpecialist,
     @TransactionRepository() specialistRep?: SpecialistRepository,
     @TransactionRepository() locationRep?: LocationRepository,
   ): Promise<ISpecialistResponse> {
-    const location = this.locationService.getLocation({ id: newSpecialist.locationId }, locationRep);
+    const location = this.locationService.getLocation({ id: specialist.locationId }, locationRep);
 
     if (!location) {
       throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
     }
 
-    return specialistRep.save(newSpecialist);
+    const { id } = await specialistRep.save(specialist);
+
+    return specialistRep.getById({ id });
   }
 
   @Transaction()
@@ -65,14 +67,6 @@ export class SpecialistService {
     }
 
     return specialistRep.save({ ...specialist, id });
-  }
-
-  @Transaction()
-  updateToken(
-    { id, token }: IUpdateToken,
-    @TransactionRepository() specialistRep?: SpecialistRepository
-  ): void {
-    specialistRep.updateToken({ id, token });
   }
 
   @Transaction()

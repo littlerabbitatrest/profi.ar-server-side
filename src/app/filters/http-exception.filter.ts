@@ -23,29 +23,29 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     switch (true) {
     // Непредвиденная серверная ошибка, критическая ошибка в логике или ошибка в запросе на сторонний сервис
-    case httpStatus === HttpStatus.INTERNAL_SERVER_ERROR: {
-      response = this.internalServerErrorLogger(exception, httpStatus, req.url, req.method);
-      break;
-    }
-    // Ошибка валидации (400, но она не относится к HttpException, поскольку её прокидывает class-validator, поэтому эту ошибку пришлось прогнать через свою фабрику в удобный вид)
-    case exception instanceof ValidationException: {
-      response = this.validationExceptionLogger(exception as ValidationException, httpStatus, req.url, req.method);
-      break;
-    }
-    // Серверная ошибка NOT_FOUND 404 (мы её не выбрасываем сами, она бросается исключительно сервером)
-    case exception instanceof NotFoundException: {
-      response = this.notFoundErrorLogger(exception as NotFoundException, httpStatus, req.url, req.method);
-      break;
-    }
-    // Любая нами же созданная ошибка (400, 401, 403)
-    case exception instanceof HttpException: {
-      response = this.clientErrorLogger(exception as HttpException, httpStatus, req.url, req.method);
-      break;
-    }
-    default: {
-      response = { message: 'неопознанная ебала' };
-      break;
-    }
+      case httpStatus === HttpStatus.INTERNAL_SERVER_ERROR: {
+        response = this.internalServerErrorLogger(exception, httpStatus, req.url, req.method);
+        break;
+      }
+      // Ошибка валидации (400, но она не относится к HttpException, поскольку её прокидывает class-validator, поэтому эту ошибку пришлось прогнать через свою фабрику в удобный вид)
+      case exception instanceof ValidationException: {
+        response = this.validationExceptionLogger(exception as ValidationException, httpStatus, req.url, req.method);
+        break;
+      }
+      // Серверная ошибка NOT_FOUND 404 (мы её не выбрасываем сами, она бросается исключительно сервером)
+      case exception instanceof NotFoundException: {
+        response = this.notFoundErrorLogger(exception as NotFoundException, httpStatus, req.url, req.method);
+        break;
+      }
+      // Любая нами же созданная ошибка (400, 401, 403)
+      case exception instanceof HttpException: {
+        response = this.clientErrorLogger(exception as HttpException, httpStatus, req.url, req.method);
+        break;
+      }
+      default: {
+        response = { message: 'неопознанная ебала' };
+        break;
+      }
     }
 
     res

@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { Specialist } from '@app/entities';
-import { IGetById, ILogin, IUpdateToken, ISpecialistResponse, IGetAllSpecialistParam } from '@app/repositories/specialist';
+import { IGetById, ILogin, ISpecialistResponse, IGetAllSpecialistParam } from '@app/repositories/specialist';
 import { ISpecialist } from '@app/interfaces';
 
 @EntityRepository(Specialist)
@@ -43,13 +43,5 @@ export class SpecialistRepository extends Repository<Specialist> {
       .select();
 
     return query.getOne();
-  }
-
-  updateToken({ id, token }: IUpdateToken): void {
-    this.createQueryBuilder().update(Specialist)
-      .set({ token })
-      .where('id = :id', { id })
-      .execute()
-      .then();
   }
 }

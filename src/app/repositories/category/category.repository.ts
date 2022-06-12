@@ -20,7 +20,7 @@ export class CategoryRepository extends Repository<Category> {
       .innerJoin('category.scope', 'scope');
 
     if (scopeId) {
-      query.where('category.scope = :acopeId', { scopeId });
+      query.where('category.scope = :scopeId', { scopeId });
     }
 
     query.select(['category.id', 'category.title', 'scope.id', 'category.name']);

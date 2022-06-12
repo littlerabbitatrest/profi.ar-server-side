@@ -11,8 +11,8 @@ import {
 import { JWTGuard, RoleGuard } from '@app/guards';
 import { Roles } from '@app/decorators';
 
+@UseGuards(JWTGuard, RoleGuard)
 @Controller('scopes')
-@UseGuards(JWTGuard)
 export class ScopeController {
   constructor(private readonly scopeService: ScopeService) {}
 
@@ -32,7 +32,6 @@ export class ScopeController {
     return scope;
   }
 
-  @UseGuards(RoleGuard)
   @Roles('admin')
   @Post()
   async createScope(
@@ -44,7 +43,6 @@ export class ScopeController {
   }
 
   @Put(':id')
-  @UseGuards(RoleGuard)
   @Roles('admin')
   async updateScope(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -56,7 +54,6 @@ export class ScopeController {
   }
 
   @Delete(':id')
-  @UseGuards(RoleGuard)
   @Roles('admin')
   async deleteScope(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string

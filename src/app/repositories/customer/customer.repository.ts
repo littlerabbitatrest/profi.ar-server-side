@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 
 import { Customer } from '@app/entities';
 import { ICustomer } from '@app/interfaces';
-import { ILogin, IGetById, IUpdateToken, IGetAllCustomersParam, ICustomerResponse } from '@app/repositories/customer';
+import { ILogin, IGetById, IGetAllCustomersParam, ICustomerResponse } from '@app/repositories/customer';
 
 @EntityRepository(Customer)
 export class CustomerRepository extends Repository<Customer> {
@@ -14,7 +14,7 @@ export class CustomerRepository extends Repository<Customer> {
       .select(['customer.id', 'customer.firstName', 'customer.lastName', 'customer.role', 'customer.photoLink',
         'customer.email', 'customer.phone', 'location.id', 'location.city', 'state.name']);
 
-    return query.getOne();
+    return query.getOneOrFail();
   }
 
   getAll({ locationId }: IGetAllCustomersParam): Promise<ICustomerResponse[]> {
@@ -39,13 +39,5 @@ export class CustomerRepository extends Repository<Customer> {
       .select();
 
     return query.getOne();
-  }
-
-  updateToken({ id, token }: IUpdateToken): void {
-    this.createQueryBuilder().update(Customer)
-      .set({ token })
-      .where('id = :id', { id })
-      .execute()
-      .then();
   }
 }

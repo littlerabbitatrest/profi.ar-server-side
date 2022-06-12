@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Transaction, TransactionRepository } from 'typeorm';
-import { createHmac, pbkdf2Sync, timingSafeEqual } from 'crypto';
+import { pbkdf2Sync, timingSafeEqual } from 'crypto';
 
 import { generateJwtToken } from '@src/utils';
 import { CustomerService } from '@app/services/customer';
@@ -36,17 +36,12 @@ export class AuthService {
       throw new HttpException('Неверный пароль', HttpStatus.BAD_REQUEST);
     }
 
-    const token = generateJwtToken({ id: customer.id, role: Roles[customer.role] });
-
-    await this.customerService.updateToken({ id: customer.id, token: this.hmac(token) });
-
-    return token;
+    return generateJwtToken({ id: customer.id, role: Roles[customer.role] });
   }
 
   @Transaction()
   async loginSpecialist(
     { login, password }: ILoginParam,
-    @TransactionRepository() specialistRep?: SpecialistRepository,
   ): Promise<string> {
     const specialist = await this.specialistService.getByPhoneOrEmail({ login });
 
@@ -60,11 +55,7 @@ export class AuthService {
       throw new HttpException('Неверный пароль', HttpStatus.BAD_REQUEST);
     }
 
-    const token = generateJwtToken({ id: specialist.id, role: 'specialist' });
-
-    await this.specialistService.updateToken({ id: specialist.id, token: this.hmac(token) }, specialistRep);
-
-    return token;
+    return generateJwtToken({ id: specialist.id, role: 'specialist' });
   }
 
   @Transaction()
@@ -89,11 +80,7 @@ export class AuthService {
 
     const customer = await this.customerService.createCustomer({ ...dto, password: this.hash(dto.password) });
 
-    const token = generateJwtToken({ id: customer.id, role: Roles[customer.role] });
-
-    await this.customerService.updateToken({ id: customer.id, token: this.hmac(token) }, customerRep);
-
-    return token;
+    return generateJwtToken({ id: customer.id, role: Roles[customer.role] });
   }
 
   @Transaction()
@@ -118,11 +105,7 @@ export class AuthService {
 
     const specialist = await this.specialistService.createSpecialist({ ...dto, password: this.hash(dto.password) });
 
-    const token = generateJwtToken({ id: specialist.id, role: 'specialist' });
-
-    await this.specialistService.updateToken({ id: specialist.id, token: this.hmac(token) }, specialistRep);
-
-    return token;
+    return generateJwtToken({ id: specialist.id, role: 'specialist' });
   }
 
   private hash(password: string) {
@@ -131,16 +114,6 @@ export class AuthService {
       return pbkdf2Sync(password, PASS_SALT, Number(PASS_ITERATIONS), Number(PASS_KEYLEN), PASS_DIGEST).toString(`hex`);
     } catch (err) {
       throw new HttpException('Не получилось войти на портал', HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  private hmac(token: string) {
-    try {
-      const { JWT_SALT } = process.env;
-      return createHmac('sha512', JWT_SALT).update(token)
-        .digest('hex');
-    } catch (err) {
-      return null;
     }
   }
 }

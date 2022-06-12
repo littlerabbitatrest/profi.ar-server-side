@@ -27,8 +27,8 @@ export class Customer extends BaseEntity implements ICustomer {
   @Column({ type: 'integer', default: 0 })
     commonRate: number;
 
-  @Column({ type: 'varchar', nullable: true, select: false })
-    token: string;
+  @Column({ type: 'varchar', nullable: false })
+    locationId: string;
 
   @Column({ type: 'enum', enum: Roles, default: Roles.common })
     role: Roles;
