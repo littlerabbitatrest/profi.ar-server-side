@@ -42,8 +42,9 @@ export class AuthService {
   @Transaction()
   async loginSpecialist(
     { login, password }: ILoginParam,
+    @TransactionRepository() specRep?: SpecialistRepository,
   ): Promise<string> {
-    const specialist = await this.specialistService.getByPhoneOrEmail({ login });
+    const specialist = await this.specialistService.getByPhoneOrEmail({ login }, specRep);
 
     if (!specialist) {
       throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
