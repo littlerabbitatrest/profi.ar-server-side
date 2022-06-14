@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsString, IsUUID, Length } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString, IsUrl, IsUUID, Length } from 'class-validator';
 
 import { Roles } from '@app/interfaces';
 
@@ -11,8 +11,8 @@ export class UpdateCustomerDto {
   @Length(2, 50)
     lastName: string;
 
-  @IsString()
-  @Length(1, 100)
+  @IsUrl()
+  @IsOptional()
     photoLink: string;
 
   @IsEmail()

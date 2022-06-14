@@ -1,0 +1,4 @@
+- GenerateUrlDto:
+    properties:
+      fileName:
+        type: 'string'

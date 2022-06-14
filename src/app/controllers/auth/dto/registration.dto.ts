@@ -1,4 +1,4 @@
-import { IsEmail, IsMobilePhone, IsString, IsUUID, Length } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsOptional, IsString, IsUrl, IsUUID, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RegistrationDto {
@@ -21,6 +21,10 @@ export class RegistrationDto {
   @IsString()
   @Length(6, 20)
     password: string;
+
+  @IsUrl()
+  @IsOptional()
+    photoLink: string;
 
   @IsUUID()
     locationId: string;

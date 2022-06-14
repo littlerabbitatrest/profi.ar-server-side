@@ -1,0 +1,19 @@
+- /images/generateUrl:
+    post:
+      tags:
+        - 'Генерация url для картинки'
+      operationId: 'generateUrl'
+      consumes:
+        - 'applications/json'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'generateUrlDto'
+          schema:
+            $ref: '#/definitions/GenerateUrlDto'
+      responses:
+        '201':
+          description: 'Ссылка выделена'
+          schema:
+            type: 'string'
