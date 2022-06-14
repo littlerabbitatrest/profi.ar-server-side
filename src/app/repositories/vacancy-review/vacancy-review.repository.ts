@@ -1,7 +1,12 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { VacancyReview } from '@app/entities';
-import { IGetAllVacancyReviewParam, IGetByIdParam, IVacancyReviewResponse } from '@app/repositories/vacancy-review';
+import {
+  IAverageScoreParam,
+  IGetAllVacancyReviewParam,
+  IGetByIdParam,
+  IVacancyReviewResponse
+} from '@app/repositories/vacancy-review';
 
 @EntityRepository(VacancyReview)
 export class VacancyReviewRepository extends Repository<VacancyReview> {
@@ -30,5 +35,14 @@ export class VacancyReviewRepository extends Repository<VacancyReview> {
 
 
     return query.getMany();
+  }
+
+  calcAvgScore({ vacancyId }: IAverageScoreParam): Promise<number> {
+    const query = this.createQueryBuilder('vacancyReview')
+      .where('vacancyReview.vacancy = :vacancyId', { vacancyId })
+      .limit(20)
+      .select('AVG(vacancyReview.rate)');
+
+    return query.getRawOne();
   }
 }

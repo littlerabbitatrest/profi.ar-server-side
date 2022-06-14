@@ -4,6 +4,7 @@ export interface IUpdateCustomer {
   photoLink: string;
   email: string;
   phone: string;
+  commonRate?: number;
 
   /* Ключи*/
   locationId: string;

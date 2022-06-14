@@ -1,7 +1,12 @@
 import { EntityRepository, Repository } from 'typeorm';
 
 import { CustomerReview } from '@app/entities';
-import { IGetAllCustomerReviewsParam, IGetByIdParam, ICustomerReviewResponse } from '@app/repositories/customer-review';
+import {
+  IGetAllCustomerReviewsParam,
+  IGetByIdParam,
+  ICustomerReviewResponse,
+  IAverageScoreParam
+} from '@app/repositories/customer-review';
 
 @EntityRepository(CustomerReview)
 export class CustomerReviewRepository extends Repository<CustomerReview> {
@@ -34,5 +39,14 @@ export class CustomerReviewRepository extends Repository<CustomerReview> {
       'customer.firstName', ' customer.lastName', 'customer.photoLink']);
 
     return query.getMany();
+  }
+
+  calcAverageScore({ customerId }: IAverageScoreParam): Promise<number> {
+    const query = this.createQueryBuilder('customerReview')
+      .where('customerReview.customer = :customerId', { customerId })
+      .limit(20)
+      .select('AVG(customerReview.rate)');
+
+    return query.getRawOne();
   }
 }

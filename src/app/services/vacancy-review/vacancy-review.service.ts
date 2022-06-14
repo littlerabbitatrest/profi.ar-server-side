@@ -16,14 +16,14 @@ export class VacancyReviewService {
   ) {}
 
   @Transaction()
-  createVacancyReview(
-    vacancyReviews: ICreateVacancyReview,
+  async createVacancyReview(
+    vacancyReview: ICreateVacancyReview,
     @TransactionRepository() vacancyReviewsRep?: VacancyReviewRepository,
     @TransactionRepository() customerRep?: CustomerRepository,
     @TransactionRepository() vacancyRep?: VacancyRepository,
   ): Promise<IVacancyReviewResponse> {
-    const customer = this.customerService.getCustomer({ id: vacancyReviews.customerId }, customerRep);
-    const vacancy = this.vacancyService.getVacancy({ id: vacancyReviews.vacancyId }, vacancyRep);
+    const customer = await this.customerService.getCustomer({ id: vacancyReview.customerId }, customerRep);
+    const vacancy = await this.vacancyService.getVacancy({ id: vacancyReview.vacancyId }, vacancyRep);
 
     if (!customer) {
       throw new HttpException('Клиент не найден', HttpStatus.BAD_REQUEST);
@@ -33,7 +33,11 @@ export class VacancyReviewService {
       throw new HttpException('Вакансия не найдена', HttpStatus.BAD_REQUEST);
     }
 
-    return vacancyReviewsRep.save(vacancyReviews);
+    const avgScore = await vacancyReviewsRep.calcAvgScore({ vacancyId: vacancyReview.vacancyId });
+
+    await this.vacancyService.updateVacancy({ id: vacancy.id }, { ...vacancy, commonRate: avgScore }, vacancyRep);
+
+    return vacancyReviewsRep.save(vacancyReview);
   }
 
   @Transaction()

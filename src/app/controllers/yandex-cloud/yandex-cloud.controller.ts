@@ -1,6 +1,6 @@
 import { Controller, Post } from '@nestjs/common';
 import { YandexCloudService } from '@app/services/yandex-cloud';
-import { GenerateUrlDto } from '@app/controllers/yandex-cloud/dto';
+import { GenerateUrlDto } from '@app/controllers/yandex-cloud';
 
 @Controller('images')
 export class YandexCloudController {

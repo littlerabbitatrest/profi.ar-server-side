@@ -26,7 +26,7 @@ export class CustomerReviewService {
     @TransactionRepository() specialistRep?: SpecialistRepository,
     @TransactionRepository() vacancyRep?: VacancyRepository,
   ): Promise<ICustomerReviewResponse> {
-    const customer = this.customerService.getCustomer({ id: customerReview.customerId }, customerRep);
+    const customer = await this.customerService.getCustomer({ id: customerReview.customerId }, customerRep);
     const specialist = await this.specialistService.getSpecialist({ id: customerReview.specialistId }, specialistRep);
     const vacancy = await this.vacancyService.getVacancy({ id: customerReview.vacancyId }, vacancyRep);
 
@@ -41,7 +41,13 @@ export class CustomerReviewService {
     if (!vacancy || vacancy.specialist.id !== specialist.id) {
       throw new HttpException('Вакансия не найдена', HttpStatus.BAD_REQUEST);
     }
+    const avdScore = await customerReviewRep.calcAverageScore({ customerId: customerReview.customerId });
 
+    await this.customerService.updateCustomer(
+      { id: customer.id },
+      { ...customer, commonRate: avdScore, locationId: customer.location.id },
+      customerRep
+    );
 
     return customerReviewRep.save(customerReview);
   }

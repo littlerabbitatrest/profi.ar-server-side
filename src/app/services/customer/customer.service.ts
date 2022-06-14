@@ -70,7 +70,7 @@ export class CustomerService {
       throw new HttpException('Местоположение не найдено', HttpStatus.BAD_REQUEST);
     }
 
-    return customerRep.save({ id, ...customer });
+    return customerRep.save({ ...customer, id });
   }
 
   @Transaction()
